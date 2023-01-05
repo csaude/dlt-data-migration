@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>migrate-us</name>
+    <name>migrate-partners</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -545,6 +545,11 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
+        <code>SQL_CONNECT</code>
+        <attribute>set foreign_key_checks=0;
+set unique_checks=0</attribute>
+      </attribute>
+      <attribute>
         <code>STREAM_RESULTS</code>
         <attribute>Y</attribute>
       </attribute>
@@ -575,12 +580,12 @@
     </hop>
     <hop>
       <from>Remoção de espaços</from>
-      <to>Escrita da Tabela</to>
+      <to>Escrita na Tabela</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Escrita da Tabela</name>
+    <name>Escrita na Tabela</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -592,7 +597,7 @@
     </partitioning>
     <connection>DLT_NEW</connection>
     <schema>dreams_db_migration</schema>
-    <table>us</table>
+    <table>partners</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>Y</ignore_errors>
@@ -613,36 +618,32 @@
         <stream_name>id</stream_name>
       </field>
       <field>
-        <column_name>us_type_id</column_name>
-        <stream_name>nivel_id</stream_name>
-      </field>
-      <field>
-        <column_name>locality_id</column_name>
-        <stream_name>post_admin_id</stream_name>
-      </field>
-      <field>
         <column_name>name</column_name>
         <stream_name>name</stream_name>
       </field>
       <field>
-        <column_name>code</column_name>
-        <stream_name>cod_us</stream_name>
+        <column_name>partner_type</column_name>
+        <stream_name>parceria_id</stream_name>
+      </field>
+      <field>
+        <column_name>district_id</column_name>
+        <stream_name>distrito_id</stream_name>
+      </field>
+      <field>
+        <column_name>abbreviation</column_name>
+        <stream_name>abreviatura</stream_name>
+      </field>
+      <field>
+        <column_name>status</column_name>
+        <stream_name>status</stream_name>
       </field>
       <field>
         <column_name>description</column_name>
         <stream_name>description</stream_name>
       </field>
       <field>
-        <column_name>latitude</column_name>
-        <stream_name>lat</stream_name>
-      </field>
-      <field>
-        <column_name>longitude</column_name>
-        <stream_name>lng</stream_name>
-      </field>
-      <field>
-        <column_name>status</column_name>
-        <stream_name>status</stream_name>
+        <column_name>logo</column_name>
+        <stream_name>logo</stream_name>
       </field>
       <field>
         <column_name>created_by</column_name>
@@ -678,7 +679,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>848</xloc>
+      <xloc>816</xloc>
       <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
@@ -695,7 +696,7 @@
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>SELECT * FROM app_dream_us</sql>
+    <sql>SELECT * FROM app_dream_parceiros</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -727,14 +728,14 @@
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>provincia_id</name>
-        <length>9</length>
-        <precision>0</precision>
+        <name>name</name>
+        <length>250</length>
+        <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>provincia_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <comments>name</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -752,11 +753,11 @@
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>nivel_id</name>
+        <name>parceria_id</name>
         <length>9</length>
         <precision>0</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>nivel_id</comments>
+        <comments>parceria_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -796,60 +797,37 @@
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>abreviatura</name>
+        <length>100</length>
+        <precision>-1</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>abreviatura</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>post_admin_id</name>
+        <name>status</name>
         <length>9</length>
         <precision>0</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>post_admin_id</comments>
+        <comments>status</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>name</name>
-        <length>150</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>cod_us</name>
-        <length>25</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>cod_us</comments>
-        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -890,58 +868,12 @@
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>lat</name>
-        <length>100</length>
+        <name>logo</name>
+        <length>150</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>lat</comments>
+        <comments>logo</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>lng</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>lng</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>status</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>status</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1147,6 +1079,19 @@
         <digits>none</digits>
         <remove_special_characters>none</remove_special_characters>
       </field>
+      <field>
+        <in_stream_name>abreviatura</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>N</init_cap>
+        <mask_xml>None</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1205,13 +1150,13 @@
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>nivel_id</name>
-      <validation_name>nivel_id</validation_name>
+      <name>parceria_id</name>
+      <validation_name>parceria_id</validation_name>
       <max_length/>
       <min_length/>
       <null_allowed>N</null_allowed>
       <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
+      <only_numeric_allowed>Y</only_numeric_allowed>
       <data_type>Integer</data_type>
       <data_type_verified>Y</data_type_verified>
       <conversion_mask/>
@@ -1226,35 +1171,7 @@
       <regular_expression/>
       <regular_expression_not_allowed/>
       <error_code>02</error_code>
-      <error_description>Erro no campo nivel_id</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>post_admin_id</name>
-      <validation_name>post_admin_id</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>03</error_code>
-      <error_description>Erro no campo post_admin_id</error_description>
+      <error_description>Erro no campo parceria_id</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
@@ -1281,36 +1198,8 @@
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>04</error_code>
+      <error_code>03</error_code>
       <error_description>Erro no campo name</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>cod_us</name>
-      <validation_name>cod_us</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>05</error_code>
-      <error_description>Erro no campo cod_us</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
@@ -1337,8 +1226,64 @@
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>06</error_code>
+      <error_code>04</error_code>
       <error_description>Erro no campo description</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>distrito_id</name>
+      <validation_name>distrito_id</validation_name>
+      <max_length/>
+      <min_length/>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>Y</only_numeric_allowed>
+      <data_type>Integer</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>05</error_code>
+      <error_description>Erro no campo distriito_id</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>abreviatura</name>
+      <validation_name>abreviatura</validation_name>
+      <max_length/>
+      <min_length/>
+      <null_allowed>Y</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>06</error_code>
+      <error_description>Erro no campo abreviatura</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>migrate-us</name>
+    <name>migrate-services</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -592,7 +592,7 @@
     </partitioning>
     <connection>DLT_NEW</connection>
     <schema>dreams_db_migration</schema>
-    <table>us</table>
+    <table>services</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>Y</ignore_errors>
@@ -613,36 +613,28 @@
         <stream_name>id</stream_name>
       </field>
       <field>
-        <column_name>us_type_id</column_name>
-        <stream_name>nivel_id</stream_name>
-      </field>
-      <field>
-        <column_name>locality_id</column_name>
-        <stream_name>post_admin_id</stream_name>
+        <column_name>service_type</column_name>
+        <stream_name>servico_id</stream_name>
       </field>
       <field>
         <column_name>name</column_name>
         <stream_name>name</stream_name>
       </field>
       <field>
-        <column_name>code</column_name>
-        <stream_name>cod_us</stream_name>
-      </field>
-      <field>
-        <column_name>description</column_name>
-        <stream_name>description</stream_name>
-      </field>
-      <field>
-        <column_name>latitude</column_name>
-        <stream_name>lat</stream_name>
-      </field>
-      <field>
-        <column_name>longitude</column_name>
-        <stream_name>lng</stream_name>
+        <column_name>core_service</column_name>
+        <stream_name>core_service</stream_name>
       </field>
       <field>
         <column_name>status</column_name>
         <stream_name>status</stream_name>
+      </field>
+      <field>
+        <column_name>hidden</column_name>
+        <stream_name>oculto</stream_name>
+      </field>
+      <field>
+        <column_name>description</column_name>
+        <stream_name>description</stream_name>
       </field>
       <field>
         <column_name>created_by</column_name>
@@ -695,7 +687,7 @@
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>SELECT * FROM app_dream_us</sql>
+    <sql>SELECT * FROM app_dream_servicos</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -729,80 +721,11 @@
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>provincia_id</name>
+        <name>servico_id</name>
         <length>9</length>
         <precision>0</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>provincia_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>nivel_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>nivel_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>distrito_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>distrito_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>post_admin_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>post_admin_id</comments>
+        <comments>servico_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -822,7 +745,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>name</name>
-        <length>150</length>
+        <length>250</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
         <comments>name</comments>
@@ -842,83 +765,14 @@
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>String</type>
+        <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>cod_us</name>
-        <length>25</length>
-        <precision>-1</precision>
+        <name>core_service</name>
+        <length>9</length>
+        <precision>0</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>cod_us</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>description</name>
-        <length>250</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>description</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>lat</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>lat</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>lng</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela</origin>
-        <comments>lng</comments>
-        <conversion_Mask/>
+        <comments>core_service</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -942,6 +796,52 @@
         <origin>Leitura da Tabela</origin>
         <comments>status</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>oculto</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>oculto</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>description</name>
+        <length>250</length>
+        <precision>-1</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>description</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1205,13 +1105,13 @@
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>nivel_id</name>
-      <validation_name>nivel_id</validation_name>
+      <name>servico_id</name>
+      <validation_name>servico_id</validation_name>
       <max_length/>
       <min_length/>
       <null_allowed>N</null_allowed>
       <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
+      <only_numeric_allowed>Y</only_numeric_allowed>
       <data_type>Integer</data_type>
       <data_type_verified>Y</data_type_verified>
       <conversion_mask/>
@@ -1226,35 +1126,7 @@
       <regular_expression/>
       <regular_expression_not_allowed/>
       <error_code>02</error_code>
-      <error_description>Erro no campo nivel_id</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>post_admin_id</name>
-      <validation_name>post_admin_id</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>03</error_code>
-      <error_description>Erro no campo post_admin_id</error_description>
+      <error_description>Erro no campo servico_id</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
@@ -1281,7 +1153,7 @@
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>04</error_code>
+      <error_code>03</error_code>
       <error_description>Erro no campo name</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
@@ -1289,14 +1161,14 @@
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>cod_us</name>
-      <validation_name>cod_us</validation_name>
+      <name>core_service</name>
+      <validation_name>core_service</validation_name>
       <max_length/>
       <min_length/>
       <null_allowed>N</null_allowed>
       <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
+      <only_numeric_allowed>Y</only_numeric_allowed>
+      <data_type>Integer</data_type>
       <data_type_verified>Y</data_type_verified>
       <conversion_mask/>
       <decimal_symbol/>
@@ -1309,8 +1181,8 @@
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>05</error_code>
-      <error_description>Erro no campo cod_us</error_description>
+      <error_code>04</error_code>
+      <error_description>Erro no campo core_service</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
@@ -1337,7 +1209,7 @@
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>06</error_code>
+      <error_code>05</error_code>
       <error_description>Erro no campo description</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
