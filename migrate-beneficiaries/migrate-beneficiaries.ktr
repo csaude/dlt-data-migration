@@ -1117,6 +1117,10 @@ set unique_checks=0</attribute>
         <name>date</name>
         <rename/>
       </field>
+      <field>
+        <name>parceiro</name>
+        <rename/>
+      </field>
       <select_unspecified>N</select_unspecified>
       <meta>
         <name>member_id</name>
@@ -1560,6 +1564,10 @@ set unique_checks=0</attribute>
       </field>
       <field>
         <name>date</name>
+        <rename/>
+      </field>
+      <field>
+        <name>parceiro</name>
         <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
@@ -2057,6 +2065,10 @@ set unique_checks=0</attribute>
         <name>date</name>
         <rename/>
       </field>
+      <field>
+        <name>parceiro</name>
+        <rename/>
+      </field>
       <select_unspecified>N</select_unspecified>
     </fields>
     <attributes/>
@@ -2152,11 +2164,14 @@ set unique_checks=0</attribute>
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>SELECT *, coalesce(STR_TO_DATE(replace(emp_birthday,'.','/'),'%m/%d/%Y'),STR_TO_DATE(replace(emp_birthday,',','/'),'%m/%d/%Y'),
-	STR_TO_DATE(replace(emp_birthday,' ','/'),'%m/%d/%Y'),STR_TO_DATE(replace(emp_birthday,'-','/'),'%m/%d/%Y'),
-	STR_TO_DATE(replace(emp_birthday,'.','/'),'%d/%m/%Y'),STR_TO_DATE(replace(emp_birthday,',','/'),'%d/%m/%Y'),
-	STR_TO_DATE(replace(emp_birthday,' ','/'),'%d/%m/%Y'),STR_TO_DATE(replace(emp_birthday,'-','/'),'%d/%m/%Y')) date
-FROM hs_hr_employee where substr(emp_birthday,3) &lt;&gt; '/__/____' and substr(emp_birthday,7) &lt;&gt; '____'</sql>
+    <sql>SELECT e.*, coalesce(STR_TO_DATE(replace(e.emp_birthday,'.','/'),'%m/%d/%Y'),STR_TO_DATE(replace(e.emp_birthday,',','/'),'%m/%d/%Y'),
+	STR_TO_DATE(replace(e.emp_birthday,' ','/'),'%m/%d/%Y'),STR_TO_DATE(replace(e.emp_birthday,'-','/'),'%m/%d/%Y'),
+	STR_TO_DATE(replace(e.emp_birthday,'.','/'),'%d/%m/%Y'),STR_TO_DATE(replace(e.emp_birthday,',','/'),'%d/%m/%Y'),
+	STR_TO_DATE(replace(e.emp_birthday,' ','/'),'%d/%m/%Y'),STR_TO_DATE(replace(e.emp_birthday,'-','/'),'%d/%m/%Y')) date,
+	e1.id parceiro
+FROM hs_hr_employee e 
+left join hs_hr_employee e1 on e1.member_id = e.parceiro_benificiario_id
+where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) &lt;&gt; '____'</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -4464,6 +4479,29 @@ FROM hs_hr_employee where substr(emp_birthday,3) &lt;&gt; '/__/____' and substr(
         <date_format_timezone>Africa/Maputo</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>parceiro</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura da tabela</origin>
+        <comments>parceiro</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
     </row-meta>
     <attributes/>
     <cluster_schema/>
@@ -4796,6 +4834,10 @@ FROM hs_hr_employee where substr(emp_birthday,3) &lt;&gt; '/__/____' and substr(
         <name>date</name>
         <rename/>
       </field>
+      <field>
+        <name>parceiro</name>
+        <rename/>
+      </field>
       <select_unspecified>N</select_unspecified>
     </fields>
     <attributes/>
@@ -5040,6 +5082,10 @@ FROM hs_hr_employee where substr(emp_birthday,3) &lt;&gt; '/__/____' and substr(
       <field>
         <column_name>date_of_birth</column_name>
         <stream_name>date</stream_name>
+      </field>
+      <field>
+        <column_name>partner_id</column_name>
+        <stream_name>parceiro</stream_name>
       </field>
     </fields>
     <attributes/>
