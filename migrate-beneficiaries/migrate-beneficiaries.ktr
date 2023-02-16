@@ -503,7 +503,7 @@
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>dreams_db_migration</database>
+    <database>dreams_db</database>
     <port>3306</port>
     <username>root</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10ccc2ffce</password>
@@ -639,7 +639,12 @@ set unique_checks=0</attribute>
     </hop>
     <hop>
       <from>Remoção de espaços</from>
-      <to>Table output</to>
+      <to>Escrita na tabela</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Leitura do distrito</from>
+      <to>Leitura da tabela</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -719,407 +724,312 @@ set unique_checks=0</attribute>
     <fields>
       <field>
         <name>id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_number</name>
-        <rename/>
       </field>
       <field>
         <name>member_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_lastname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_firstname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_middle_name</name>
-        <rename/>
       </field>
       <field>
         <name>emp_nick_name</name>
-        <rename/>
       </field>
       <field>
         <name>ponto_entrada</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_id</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_benificiario_id</name>
-        <rename/>
       </field>
       <field>
         <name>via</name>
-        <rename/>
       </field>
       <field>
         <name>idade_anos</name>
-        <rename/>
       </field>
       <field>
         <name>estudante</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_classe</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_escola</name>
-        <rename/>
       </field>
       <field>
         <name>gravida</name>
-        <rename/>
       </field>
       <field>
         <name>filhos</name>
-        <rename/>
       </field>
       <field>
         <name>bairro_id</name>
-        <rename/>
       </field>
       <field>
         <name>encarregado_educacao</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia_tipo</name>
-        <rename/>
       </field>
       <field>
         <name>house_sustainer</name>
-        <rename/>
       </field>
       <field>
         <name>married_before</name>
-        <rename/>
       </field>
       <field>
         <name>pregant_or_breastfeed</name>
-        <rename/>
       </field>
       <field>
         <name>employed</name>
-        <rename/>
       </field>
       <field>
         <name>tested_hiv</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_exploracao_sexual</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vsex_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_migrante_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sexual_activa</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_relacao_multipla</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tipo_violencia</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>coun_code</name>
-        <rename/>
       </field>
       <field>
         <name>provin_code</name>
-        <rename/>
       </field>
       <field>
         <name>district_code</name>
-        <rename/>
       </field>
       <field>
         <name>city_code</name>
-        <rename/>
       </field>
       <field>
         <name>membro_localidade_id</name>
-        <rename/>
       </field>
       <field>
         <name>us_id</name>
-        <rename/>
       </field>
       <field>
         <name>membro_zona</name>
-        <rename/>
       </field>
       <field>
         <name>membro_circulo</name>
-        <rename/>
       </field>
       <field>
         <name>membro_celula</name>
-        <rename/>
       </field>
       <field>
         <name>membro_data_admissao</name>
-        <rename/>
       </field>
       <field>
         <name>membro_caratao_eleitor</name>
-        <rename/>
       </field>
       <field>
         <name>membro_cargo_partido_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_smoker</name>
-        <rename/>
       </field>
       <field>
         <name>ethnic_race_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_birthday</name>
-        <rename/>
       </field>
       <field>
         <name>nation_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_gender</name>
-        <rename/>
       </field>
       <field>
         <name>emp_marital_status</name>
-        <rename/>
       </field>
       <field>
         <name>emp_ssn_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_sin_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_other_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_exp_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_military_service</name>
-        <rename/>
       </field>
       <field>
         <name>emp_status</name>
-        <rename/>
       </field>
       <field>
         <name>job_title_code</name>
-        <rename/>
       </field>
       <field>
         <name>eeo_cat_code</name>
-        <rename/>
       </field>
       <field>
         <name>work_station</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street1</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street2</name>
-        <rename/>
       </field>
       <field>
         <name>emp_zipcode</name>
-        <rename/>
       </field>
       <field>
         <name>emp_hm_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_mobile</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_email</name>
-        <rename/>
       </field>
       <field>
         <name>sal_grd_code</name>
-        <rename/>
       </field>
       <field>
         <name>joined_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_oth_email</name>
-        <rename/>
       </field>
       <field>
         <name>termination_id</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sex_worker</name>
-        <rename/>
       </field>
       <field>
         <name>bi</name>
-        <rename/>
       </field>
       <field>
         <name>nuit</name>
-        <rename/>
       </field>
       <field>
         <name>passaporte</name>
-        <rename/>
       </field>
       <field>
         <name>dire</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom3</name>
-        <rename/>
       </field>
       <field>
         <name>other_prof_info</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom7</name>
-        <rename/>
       </field>
       <field>
         <name>custom8</name>
-        <rename/>
       </field>
       <field>
         <name>custom9</name>
-        <rename/>
       </field>
       <field>
         <name>custom10</name>
-        <rename/>
       </field>
       <field>
         <name>criado_por</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
-        <rename/>
       </field>
       <field>
         <name>criado_em</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
-        <rename/>
       </field>
       <field>
         <name>user_location</name>
-        <rename/>
       </field>
       <field>
         <name>user_location2</name>
-        <rename/>
       </field>
       <field>
         <name>flag_vulneravel</name>
-        <rename/>
       </field>
       <field>
         <name>alcohol_drugs_use</name>
-        <rename/>
       </field>
       <field>
         <name>sti_history</name>
-        <rename/>
       </field>
       <field>
         <name>orphan</name>
-        <rename/>
       </field>
       <field>
         <name>date</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro</name>
-        <rename/>
+      </field>
+      <field>
+        <name>neighborhood</name>
+      </field>
+      <field>
+        <name>organization</name>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
@@ -1168,407 +1078,312 @@ set unique_checks=0</attribute>
     <fields>
       <field>
         <name>id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_number</name>
-        <rename/>
       </field>
       <field>
         <name>member_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_lastname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_firstname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_middle_name</name>
-        <rename/>
       </field>
       <field>
         <name>emp_nick_name</name>
-        <rename/>
       </field>
       <field>
         <name>ponto_entrada</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_id</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_benificiario_id</name>
-        <rename/>
       </field>
       <field>
         <name>via</name>
-        <rename/>
       </field>
       <field>
         <name>idade_anos</name>
-        <rename/>
       </field>
       <field>
         <name>estudante</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_classe</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_escola</name>
-        <rename/>
       </field>
       <field>
         <name>gravida</name>
-        <rename/>
       </field>
       <field>
         <name>filhos</name>
-        <rename/>
       </field>
       <field>
         <name>bairro_id</name>
-        <rename/>
       </field>
       <field>
         <name>encarregado_educacao</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia_tipo</name>
-        <rename/>
       </field>
       <field>
         <name>house_sustainer</name>
-        <rename/>
       </field>
       <field>
         <name>married_before</name>
-        <rename/>
       </field>
       <field>
         <name>pregant_or_breastfeed</name>
-        <rename/>
       </field>
       <field>
         <name>employed</name>
-        <rename/>
       </field>
       <field>
         <name>tested_hiv</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_exploracao_sexual</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vsex_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_migrante_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sexual_activa</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_relacao_multipla</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tipo_violencia</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>coun_code</name>
-        <rename/>
       </field>
       <field>
         <name>provin_code</name>
-        <rename/>
       </field>
       <field>
         <name>district_code</name>
-        <rename/>
       </field>
       <field>
         <name>city_code</name>
-        <rename/>
       </field>
       <field>
         <name>membro_localidade_id</name>
-        <rename/>
       </field>
       <field>
         <name>us_id</name>
-        <rename/>
       </field>
       <field>
         <name>membro_zona</name>
-        <rename/>
       </field>
       <field>
         <name>membro_circulo</name>
-        <rename/>
       </field>
       <field>
         <name>membro_celula</name>
-        <rename/>
       </field>
       <field>
         <name>membro_data_admissao</name>
-        <rename/>
       </field>
       <field>
         <name>membro_caratao_eleitor</name>
-        <rename/>
       </field>
       <field>
         <name>membro_cargo_partido_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_smoker</name>
-        <rename/>
       </field>
       <field>
         <name>ethnic_race_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_birthday</name>
-        <rename/>
       </field>
       <field>
         <name>nation_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_gender</name>
-        <rename/>
       </field>
       <field>
         <name>emp_marital_status</name>
-        <rename/>
       </field>
       <field>
         <name>emp_ssn_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_sin_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_other_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_exp_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_military_service</name>
-        <rename/>
       </field>
       <field>
         <name>emp_status</name>
-        <rename/>
       </field>
       <field>
         <name>job_title_code</name>
-        <rename/>
       </field>
       <field>
         <name>eeo_cat_code</name>
-        <rename/>
       </field>
       <field>
         <name>work_station</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street1</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street2</name>
-        <rename/>
       </field>
       <field>
         <name>emp_zipcode</name>
-        <rename/>
       </field>
       <field>
         <name>emp_hm_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_mobile</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_email</name>
-        <rename/>
       </field>
       <field>
         <name>sal_grd_code</name>
-        <rename/>
       </field>
       <field>
         <name>joined_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_oth_email</name>
-        <rename/>
       </field>
       <field>
         <name>termination_id</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sex_worker</name>
-        <rename/>
       </field>
       <field>
         <name>bi</name>
-        <rename/>
       </field>
       <field>
         <name>nuit</name>
-        <rename/>
       </field>
       <field>
         <name>passaporte</name>
-        <rename/>
       </field>
       <field>
         <name>dire</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom3</name>
-        <rename/>
       </field>
       <field>
         <name>other_prof_info</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom7</name>
-        <rename/>
       </field>
       <field>
         <name>custom8</name>
-        <rename/>
       </field>
       <field>
         <name>custom9</name>
-        <rename/>
       </field>
       <field>
         <name>custom10</name>
-        <rename/>
       </field>
       <field>
         <name>criado_por</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
-        <rename/>
       </field>
       <field>
         <name>criado_em</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
-        <rename/>
       </field>
       <field>
         <name>user_location</name>
-        <rename/>
       </field>
       <field>
         <name>user_location2</name>
-        <rename/>
       </field>
       <field>
         <name>flag_vulneravel</name>
-        <rename/>
       </field>
       <field>
         <name>alcohol_drugs_use</name>
-        <rename/>
       </field>
       <field>
         <name>sti_history</name>
-        <rename/>
       </field>
       <field>
         <name>orphan</name>
-        <rename/>
       </field>
       <field>
         <name>date</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro</name>
-        <rename/>
+      </field>
+      <field>
+        <name>neighborhood</name>
+      </field>
+      <field>
+        <name>organization</name>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
@@ -1654,6 +1469,258 @@ set unique_checks=0</attribute>
     </GUI>
   </step>
   <step>
+    <name>Escrita na tabela</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DLT_NEW</connection>
+    <schema>dreams_db</schema>
+    <table>beneficiaries</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>id</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>nui</column_name>
+        <stream_name>member_id</stream_name>
+      </field>
+      <field>
+        <column_name>surname</column_name>
+        <stream_name>emp_lastname</stream_name>
+      </field>
+      <field>
+        <column_name>name</column_name>
+        <stream_name>emp_firstname</stream_name>
+      </field>
+      <field>
+        <column_name>nick_name</column_name>
+        <stream_name>emp_nick_name</stream_name>
+      </field>
+      <field>
+        <column_name>entry_point</column_name>
+        <stream_name>ponto_entrada</stream_name>
+      </field>
+      <field>
+        <column_name>organization_id</column_name>
+        <stream_name>organization</stream_name>
+      </field>
+      <field>
+        <column_name>partner_nui</column_name>
+        <stream_name>parceiro_benificiario_id</stream_name>
+      </field>
+      <field>
+        <column_name>via</column_name>
+        <stream_name>via</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_is_student</column_name>
+        <stream_name>estudante</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_school_grade</column_name>
+        <stream_name>estudante_classe</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_school_name</column_name>
+        <stream_name>estudante_escola</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_pregnant_before</column_name>
+        <stream_name>gravida</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_children</column_name>
+        <stream_name>filhos</stream_name>
+      </field>
+      <field>
+        <column_name>neighbourhood_id</column_name>
+        <stream_name>neighborhood</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_lives_with</column_name>
+        <stream_name>encarregado_educacao</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_is_deficient</column_name>
+        <stream_name>deficiencia</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_deficiency_type</column_name>
+        <stream_name>deficiencia_tipo</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_house_sustainer</column_name>
+        <stream_name>house_sustainer</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_married_before</column_name>
+        <stream_name>married_before</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_pregnant_or_breastfeeding</column_name>
+        <stream_name>pregant_or_breastfeed</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_is_employed</column_name>
+        <stream_name>employed</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_tested_hiv</column_name>
+        <stream_name>tested_hiv</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_sexual_exploitation</column_name>
+        <stream_name>vbg_exploracao_sexual</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_sexploitation_time</column_name>
+        <stream_name>vbg_vsex_tempo</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_is_migrant</column_name>
+        <stream_name>vbg_migrante_trafico</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_trafficking_victim</column_name>
+        <stream_name>vbg_vitima_trafico</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_sexually_active</column_name>
+        <stream_name>vbg_sexual_activa</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_multiple_partners</column_name>
+        <stream_name>vbg_relacao_multipla</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_vbg_victim</column_name>
+        <stream_name>vbg_vitima</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_vbg_type</column_name>
+        <stream_name>vbg_tipo_violencia</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_vbg_time</column_name>
+        <stream_name>vbg_tempo</stream_name>
+      </field>
+      <field>
+        <column_name>locality_id</column_name>
+        <stream_name>membro_localidade_id</stream_name>
+      </field>
+      <field>
+        <column_name>us_id</column_name>
+        <stream_name>us_id</stream_name>
+      </field>
+      <field>
+        <column_name>nationality</column_name>
+        <stream_name>nation_code</stream_name>
+      </field>
+      <field>
+        <column_name>gender</column_name>
+        <stream_name>emp_gender</stream_name>
+      </field>
+      <field>
+        <column_name>status</column_name>
+        <stream_name>emp_status</stream_name>
+      </field>
+      <field>
+        <column_name>address</column_name>
+        <stream_name>emp_street1</stream_name>
+      </field>
+      <field>
+        <column_name>phone_number</column_name>
+        <stream_name>emp_mobile</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_sex_worker</column_name>
+        <stream_name>vbg_sex_worker</stream_name>
+      </field>
+      <field>
+        <column_name>created_by</column_name>
+        <stream_name>criado_por</stream_name>
+      </field>
+      <field>
+        <column_name>updated_by</column_name>
+        <stream_name>actualizado_por</stream_name>
+      </field>
+      <field>
+        <column_name>date_created</column_name>
+        <stream_name>criado_em</stream_name>
+      </field>
+      <field>
+        <column_name>date_updated</column_name>
+        <stream_name>actualizado_em</stream_name>
+      </field>
+      <field>
+        <column_name>create_ip</column_name>
+        <stream_name>user_location</stream_name>
+      </field>
+      <field>
+        <column_name>update_ip</column_name>
+        <stream_name>user_location2</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_alcohol_drugs_use</column_name>
+        <stream_name>alcohol_drugs_use</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_sti_history</column_name>
+        <stream_name>sti_history</stream_name>
+      </field>
+      <field>
+        <column_name>vblt_is_orphan</column_name>
+        <stream_name>orphan</stream_name>
+      </field>
+      <field>
+        <column_name>e_mail</column_name>
+        <stream_name>emp_work_email</stream_name>
+      </field>
+      <field>
+        <column_name>date_of_birth</column_name>
+        <stream_name>date</stream_name>
+      </field>
+      <field>
+        <column_name>partner_id</column_name>
+        <stream_name>parceiro</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1136</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Exclusão da variável auxiliar</name>
     <type>SelectValues</type>
     <description/>
@@ -1667,407 +1734,312 @@ set unique_checks=0</attribute>
     <fields>
       <field>
         <name>id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_number</name>
-        <rename/>
       </field>
       <field>
         <name>member_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_lastname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_firstname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_middle_name</name>
-        <rename/>
       </field>
       <field>
         <name>emp_nick_name</name>
-        <rename/>
       </field>
       <field>
         <name>ponto_entrada</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_id</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_benificiario_id</name>
-        <rename/>
       </field>
       <field>
         <name>via</name>
-        <rename/>
       </field>
       <field>
         <name>idade_anos</name>
-        <rename/>
       </field>
       <field>
         <name>estudante</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_classe</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_escola</name>
-        <rename/>
       </field>
       <field>
         <name>gravida</name>
-        <rename/>
       </field>
       <field>
         <name>filhos</name>
-        <rename/>
       </field>
       <field>
         <name>bairro_id</name>
-        <rename/>
       </field>
       <field>
         <name>encarregado_educacao</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia_tipo</name>
-        <rename/>
       </field>
       <field>
         <name>house_sustainer</name>
-        <rename/>
       </field>
       <field>
         <name>married_before</name>
-        <rename/>
       </field>
       <field>
         <name>pregant_or_breastfeed</name>
-        <rename/>
       </field>
       <field>
         <name>employed</name>
-        <rename/>
       </field>
       <field>
         <name>tested_hiv</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_exploracao_sexual</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vsex_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_migrante_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sexual_activa</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_relacao_multipla</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tipo_violencia</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>coun_code</name>
-        <rename/>
       </field>
       <field>
         <name>provin_code</name>
-        <rename/>
       </field>
       <field>
         <name>district_code</name>
-        <rename/>
       </field>
       <field>
         <name>city_code</name>
-        <rename/>
       </field>
       <field>
         <name>membro_localidade_id</name>
-        <rename/>
       </field>
       <field>
         <name>us_id</name>
-        <rename/>
       </field>
       <field>
         <name>membro_zona</name>
-        <rename/>
       </field>
       <field>
         <name>membro_circulo</name>
-        <rename/>
       </field>
       <field>
         <name>membro_celula</name>
-        <rename/>
       </field>
       <field>
         <name>membro_data_admissao</name>
-        <rename/>
       </field>
       <field>
         <name>membro_caratao_eleitor</name>
-        <rename/>
       </field>
       <field>
         <name>membro_cargo_partido_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_smoker</name>
-        <rename/>
       </field>
       <field>
         <name>ethnic_race_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_birthday</name>
-        <rename/>
       </field>
       <field>
         <name>nation_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_gender</name>
-        <rename/>
       </field>
       <field>
         <name>emp_marital_status</name>
-        <rename/>
       </field>
       <field>
         <name>emp_ssn_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_sin_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_other_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_exp_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_military_service</name>
-        <rename/>
       </field>
       <field>
         <name>emp_status</name>
-        <rename/>
       </field>
       <field>
         <name>job_title_code</name>
-        <rename/>
       </field>
       <field>
         <name>eeo_cat_code</name>
-        <rename/>
       </field>
       <field>
         <name>work_station</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street1</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street2</name>
-        <rename/>
       </field>
       <field>
         <name>emp_zipcode</name>
-        <rename/>
       </field>
       <field>
         <name>emp_hm_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_mobile</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_email</name>
-        <rename/>
       </field>
       <field>
         <name>sal_grd_code</name>
-        <rename/>
       </field>
       <field>
         <name>joined_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_oth_email</name>
-        <rename/>
       </field>
       <field>
         <name>termination_id</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sex_worker</name>
-        <rename/>
       </field>
       <field>
         <name>bi</name>
-        <rename/>
       </field>
       <field>
         <name>nuit</name>
-        <rename/>
       </field>
       <field>
         <name>passaporte</name>
-        <rename/>
       </field>
       <field>
         <name>dire</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom3</name>
-        <rename/>
       </field>
       <field>
         <name>other_prof_info</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom7</name>
-        <rename/>
       </field>
       <field>
         <name>custom8</name>
-        <rename/>
       </field>
       <field>
         <name>custom9</name>
-        <rename/>
       </field>
       <field>
         <name>custom10</name>
-        <rename/>
       </field>
       <field>
         <name>criado_por</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
-        <rename/>
       </field>
       <field>
         <name>criado_em</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
-        <rename/>
       </field>
       <field>
         <name>user_location</name>
-        <rename/>
       </field>
       <field>
         <name>user_location2</name>
-        <rename/>
       </field>
       <field>
         <name>flag_vulneravel</name>
-        <rename/>
       </field>
       <field>
         <name>alcohol_drugs_use</name>
-        <rename/>
       </field>
       <field>
         <name>sti_history</name>
-        <rename/>
       </field>
       <field>
         <name>orphan</name>
-        <rename/>
       </field>
       <field>
         <name>date</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro</name>
-        <rename/>
+      </field>
+      <field>
+        <name>neighborhood</name>
+      </field>
+      <field>
+        <name>organization</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -2168,17 +2140,43 @@ set unique_checks=0</attribute>
 	STR_TO_DATE(replace(e.emp_birthday,' ','/'),'%m/%d/%Y'),STR_TO_DATE(replace(e.emp_birthday,'-','/'),'%m/%d/%Y'),
 	STR_TO_DATE(replace(e.emp_birthday,'.','/'),'%d/%m/%Y'),STR_TO_DATE(replace(e.emp_birthday,',','/'),'%d/%m/%Y'),
 	STR_TO_DATE(replace(e.emp_birthday,' ','/'),'%d/%m/%Y'),STR_TO_DATE(replace(e.emp_birthday,'-','/'),'%d/%m/%Y')) date,
-	e1.id parceiro
+	e1.id parceiro,
+	if(e.bairro_id=0,null,e.bairro_id) neighborhood,
+	if(e.parceiro_id=0,null,e.parceiro_id) organization
 FROM hs_hr_employee e 
 left join hs_hr_employee e1 on e1.member_id = e.parceiro_benificiario_id
-where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) &lt;&gt; '____'</sql>
+where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) &lt;&gt; '____'
+and e.district_code = ${district_code}</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>district_code</name>
+        <length>16</length>
+        <precision>-1</precision>
+        <origin>Leitura do distrito</origin>
+        <comments/>
+        <conversion_Mask/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
@@ -3033,7 +3031,7 @@ where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) 
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>district_code</name>
+        <name>district_code_1</name>
         <length>100</length>
         <precision>-1</precision>
         <origin>Leitura da tabela</origin>
@@ -4502,6 +4500,52 @@ where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) 
         <date_format_timezone>Africa/Maputo</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>neighborhood</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura da tabela</origin>
+        <comments>neighborhood</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>organization</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura da tabela</origin>
+        <comments>organization</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
     </row-meta>
     <attributes/>
     <cluster_schema/>
@@ -4514,6 +4558,45 @@ where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) 
     <GUI>
       <xloc>96</xloc>
       <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Leitura do distrito</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>district_code</name>
+        <variable>${district_code}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>96</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4636,207 +4719,159 @@ where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) 
     <fields>
       <field>
         <name>id</name>
-        <rename/>
       </field>
       <field>
         <name>member_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_lastname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_firstname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_nick_name</name>
-        <rename/>
       </field>
       <field>
         <name>ponto_entrada</name>
-        <rename/>
       </field>
       <field>
-        <name>parceiro_id</name>
-        <rename/>
+        <name>organization</name>
       </field>
       <field>
         <name>parceiro_benificiario_id</name>
-        <rename/>
       </field>
       <field>
         <name>via</name>
-        <rename/>
       </field>
       <field>
         <name>estudante</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_classe</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_escola</name>
-        <rename/>
       </field>
       <field>
         <name>gravida</name>
-        <rename/>
       </field>
       <field>
         <name>filhos</name>
-        <rename/>
-      </field>
-      <field>
-        <name>bairro_id</name>
-        <rename/>
       </field>
       <field>
         <name>encarregado_educacao</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia_tipo</name>
-        <rename/>
       </field>
       <field>
         <name>house_sustainer</name>
-        <rename/>
       </field>
       <field>
         <name>married_before</name>
-        <rename/>
       </field>
       <field>
         <name>pregant_or_breastfeed</name>
-        <rename/>
       </field>
       <field>
         <name>employed</name>
-        <rename/>
       </field>
       <field>
         <name>tested_hiv</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_exploracao_sexual</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vsex_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_migrante_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sexual_activa</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_relacao_multipla</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tipo_violencia</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tempo</name>
-        <rename/>
+      </field>
+      <field>
+        <name>membro_localidade_id</name>
       </field>
       <field>
         <name>us_id</name>
-        <rename/>
       </field>
       <field>
         <name>nation_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_gender</name>
-        <rename/>
       </field>
       <field>
         <name>emp_status</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street1</name>
-        <rename/>
       </field>
       <field>
         <name>emp_mobile</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sex_worker</name>
-        <rename/>
       </field>
       <field>
         <name>criado_por</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
-        <rename/>
       </field>
       <field>
         <name>criado_em</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
-        <rename/>
       </field>
       <field>
         <name>user_location</name>
-        <rename/>
       </field>
       <field>
         <name>user_location2</name>
-        <rename/>
       </field>
       <field>
         <name>alcohol_drugs_use</name>
-        <rename/>
       </field>
       <field>
         <name>sti_history</name>
-        <rename/>
       </field>
       <field>
         <name>orphan</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_email</name>
-        <rename/>
       </field>
       <field>
         <name>date</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro</name>
-        <rename/>
+      </field>
+      <field>
+        <name>neighborhood</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -4850,254 +4885,6 @@ where substr(e.emp_birthday,3) &lt;&gt; '/__/____' and substr(e.emp_birthday,7) 
     </remotesteps>
     <GUI>
       <xloc>736</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>DLT_NEW</connection>
-    <schema>dreams_db_migration</schema>
-    <table>beneficiaries</table>
-    <commit>1000</commit>
-    <truncate>Y</truncate>
-    <ignore_errors>Y</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>id</column_name>
-        <stream_name>id</stream_name>
-      </field>
-      <field>
-        <column_name>nui</column_name>
-        <stream_name>member_id</stream_name>
-      </field>
-      <field>
-        <column_name>surname</column_name>
-        <stream_name>emp_lastname</stream_name>
-      </field>
-      <field>
-        <column_name>name</column_name>
-        <stream_name>emp_firstname</stream_name>
-      </field>
-      <field>
-        <column_name>nick_name</column_name>
-        <stream_name>emp_nick_name</stream_name>
-      </field>
-      <field>
-        <column_name>entry_point</column_name>
-        <stream_name>ponto_entrada</stream_name>
-      </field>
-      <field>
-        <column_name>organization_id</column_name>
-        <stream_name>parceiro_id</stream_name>
-      </field>
-      <field>
-        <column_name>partner_nui</column_name>
-        <stream_name>parceiro_benificiario_id</stream_name>
-      </field>
-      <field>
-        <column_name>via</column_name>
-        <stream_name>via</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_is_student</column_name>
-        <stream_name>estudante</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_school_grade</column_name>
-        <stream_name>estudante_classe</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_school_name</column_name>
-        <stream_name>estudante_escola</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_pregnant_before</column_name>
-        <stream_name>gravida</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_children</column_name>
-        <stream_name>filhos</stream_name>
-      </field>
-      <field>
-        <column_name>neighbourhood_id</column_name>
-        <stream_name>bairro_id</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_lives_with</column_name>
-        <stream_name>encarregado_educacao</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_is_deficient</column_name>
-        <stream_name>deficiencia</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_deficiency_type</column_name>
-        <stream_name>deficiencia_tipo</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_house_sustainer</column_name>
-        <stream_name>house_sustainer</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_married_before</column_name>
-        <stream_name>married_before</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_pregnant_or_breastfeeding</column_name>
-        <stream_name>pregant_or_breastfeed</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_is_employed</column_name>
-        <stream_name>employed</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_tested_hiv</column_name>
-        <stream_name>tested_hiv</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_sexual_exploitation</column_name>
-        <stream_name>vbg_exploracao_sexual</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_sexploitation_time</column_name>
-        <stream_name>vbg_vsex_tempo</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_is_migrant</column_name>
-        <stream_name>vbg_migrante_trafico</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_trafficking_victim</column_name>
-        <stream_name>vbg_vitima_trafico</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_sexually_active</column_name>
-        <stream_name>vbg_sexual_activa</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_multiple_partners</column_name>
-        <stream_name>vbg_relacao_multipla</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_vbg_victim</column_name>
-        <stream_name>vbg_vitima</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_vbg_type</column_name>
-        <stream_name>vbg_tipo_violencia</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_vbg_time</column_name>
-        <stream_name>vbg_tempo</stream_name>
-      </field>
-      <field>
-        <column_name>us_id</column_name>
-        <stream_name>us_id</stream_name>
-      </field>
-      <field>
-        <column_name>nationality</column_name>
-        <stream_name>nation_code</stream_name>
-      </field>
-      <field>
-        <column_name>gender</column_name>
-        <stream_name>emp_gender</stream_name>
-      </field>
-      <field>
-        <column_name>status</column_name>
-        <stream_name>emp_status</stream_name>
-      </field>
-      <field>
-        <column_name>address</column_name>
-        <stream_name>emp_street1</stream_name>
-      </field>
-      <field>
-        <column_name>phone_number</column_name>
-        <stream_name>emp_mobile</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_sex_worker</column_name>
-        <stream_name>vbg_sex_worker</stream_name>
-      </field>
-      <field>
-        <column_name>created_by</column_name>
-        <stream_name>criado_por</stream_name>
-      </field>
-      <field>
-        <column_name>updated_by</column_name>
-        <stream_name>actualizado_por</stream_name>
-      </field>
-      <field>
-        <column_name>date_created</column_name>
-        <stream_name>criado_em</stream_name>
-      </field>
-      <field>
-        <column_name>date_updated</column_name>
-        <stream_name>actualizado_em</stream_name>
-      </field>
-      <field>
-        <column_name>create_ip</column_name>
-        <stream_name>user_location</stream_name>
-      </field>
-      <field>
-        <column_name>update_ip</column_name>
-        <stream_name>user_location2</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_alcohol_drugs_use</column_name>
-        <stream_name>alcohol_drugs_use</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_sti_history</column_name>
-        <stream_name>sti_history</stream_name>
-      </field>
-      <field>
-        <column_name>vblt_is_orphan</column_name>
-        <stream_name>orphan</stream_name>
-      </field>
-      <field>
-        <column_name>e_mail</column_name>
-        <stream_name>emp_work_email</stream_name>
-      </field>
-      <field>
-        <column_name>date_of_birth</column_name>
-        <stream_name>date</stream_name>
-      </field>
-      <field>
-        <column_name>partner_id</column_name>
-        <stream_name>parceiro</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1152</xloc>
       <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>

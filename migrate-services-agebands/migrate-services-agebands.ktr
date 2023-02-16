@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>migrate-referrals</name>
+    <name>migrate-fixa-servicos</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
-    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -428,10 +427,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2023/01/16 12:54:02.964</created_date>
+    <created_date>2023/02/16 13:19:31.970</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2023/01/16 12:54:02.964</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2023/02/16 13:19:31.970</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -570,162 +569,20 @@ set unique_checks=0</attribute>
   <order>
     <hop>
       <from>Leitura da tabela</from>
-      <to>Validação de campos</to>
+      <to>Remover espaços em branco</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Validação de campos</from>
-      <to>Remoção de espaços</to>
+      <from>Remover espaços em branco</from>
+      <to>Seleccionar dados a migrar</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Selecção de dados a migrar</from>
-      <to>Escrita na tabela</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Remoção de espaços</from>
-      <to>Selecção de dados a migrar</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Leitura do distrito</from>
-      <to>Leitura da tabela</to>
+      <from>Seleccionar dados a migrar</from>
+      <to>Escrever na tabela</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>Escrita na tabela</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>DLT_NEW</connection>
-    <schema>dreams_db</schema>
-    <table>references</table>
-    <commit>1000</commit>
-    <truncate>Y</truncate>
-    <ignore_errors>Y</ignore_errors>
-    <use_batch>N</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>id</column_name>
-        <stream_name>id</stream_name>
-      </field>
-      <field>
-        <column_name>beneficiary_id</column_name>
-        <stream_name>beneficiario_id</stream_name>
-      </field>
-      <field>
-        <column_name>reference_note</column_name>
-        <stream_name>nota_referencia</stream_name>
-      </field>
-      <field>
-        <column_name>description</column_name>
-        <stream_name>name</stream_name>
-      </field>
-      <field>
-        <column_name>refer_to</column_name>
-        <stream_name>entry_point</stream_name>
-      </field>
-      <field>
-        <column_name>referred_by</column_name>
-        <stream_name>referido_por</stream_name>
-      </field>
-      <field>
-        <column_name>notify_to</column_name>
-        <stream_name>notify_to</stream_name>
-      </field>
-      <field>
-        <column_name>book_number</column_name>
-        <stream_name>num_livro</stream_name>
-      </field>
-      <field>
-        <column_name>reference_code</column_name>
-        <stream_name>ref_livro</stream_name>
-      </field>
-      <field>
-        <column_name>service_type</column_name>
-        <stream_name>servico_id</stream_name>
-      </field>
-      <field>
-        <column_name>intervention</column_name>
-        <stream_name>intervensao</stream_name>
-      </field>
-      <field>
-        <column_name>remarks</column_name>
-        <stream_name>description</stream_name>
-      </field>
-      <field>
-        <column_name>cancel_reason</column_name>
-        <stream_name>cancel_reason</stream_name>
-      </field>
-      <field>
-        <column_name>other_reason</column_name>
-        <stream_name>other_reason</stream_name>
-      </field>
-      <field>
-        <column_name>user_created</column_name>
-        <stream_name>criado_por</stream_name>
-      </field>
-      <field>
-        <column_name>updated_by</column_name>
-        <stream_name>actualizado_por</stream_name>
-      </field>
-      <field>
-        <column_name>date_created</column_name>
-        <stream_name>criado_em</stream_name>
-      </field>
-      <field>
-        <column_name>date_updated</column_name>
-        <stream_name>actualizado_em</stream_name>
-      </field>
-      <field>
-        <column_name>create_ip</column_name>
-        <stream_name>user_location</stream_name>
-      </field>
-      <field>
-        <column_name>update_ip</column_name>
-        <stream_name>user_location2</stream_name>
-      </field>
-      <field>
-        <column_name>status</column_name>
-        <stream_name>estado</stream_name>
-      </field>
-      <field>
-        <column_name>us_id</column_name>
-        <stream_name>us_id</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1088</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Leitura da tabela</name>
     <type>TableInput</type>
@@ -738,55 +595,22 @@ set unique_checks=0</attribute>
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>SELECT r.*, 
-if(r.status=0, 3, if(r.status_ref=0,0,2)) estado,
-if(notificar_ao='-', null, p.user_id) notify_to,
-case (r.refer_to)
-	when 'US' then 1
-	when 'CM' then 2
-	when 'ES' then 3
-	else null
-end entry_point,
-us.id us_id
-FROM dreamsco_app.app_dream_referencias r
-left join profile p on r.notificar_ao = p.id
-left join user u on p.user_id = u.id 
-inner join app_dream_us us on u.us_id = us.id 
-where r.beneficiario_id in
-(
-	select id from hs_hr_employee
-	where district_code = ${district_code}
-)</sql>
+    <sql>select fs.*,
+case
+	when fs.faixa_id in (1,2,3,10,13) then 1
+	when fs.faixa_id in (4,5,6,11) then 2
+	when fs.faixa_id in (7,8,9,12) then 3
+end age_band, 
+fe.nivel_intervencao_id
+from app_dream_faixa_servico fs
+inner join app_dream_faixa_etaria fe on fs.faixa_id = fe.id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
+    <variables_active>N</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>district_code</name>
-        <length>16</length>
-        <precision>-1</precision>
-        <origin>Leitura do distrito</origin>
-        <comments/>
-        <conversion_Mask/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
@@ -813,11 +637,11 @@ where r.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>beneficiario_id</name>
+        <name>faixa_id</name>
         <length>9</length>
         <precision>0</precision>
         <origin>Leitura da tabela</origin>
-        <comments>beneficiario_id</comments>
+        <comments>faixa_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -836,241 +660,11 @@ where r.beneficiario_id in
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>nota_referencia</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>nota_referencia</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>name</name>
+        <name>servico_id</name>
         <length>250</length>
         <precision>-1</precision>
         <origin>Leitura da tabela</origin>
-        <comments>name</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>distrito_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>distrito_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>projecto</name>
-        <length>150</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>projecto</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>refer_to</name>
-        <length>200</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>refer_to</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>referido_por</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>referido_por</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>notificar_ao</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>notificar_ao</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>num_livro</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>num_livro</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>ref_livro</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>ref_livro</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>servico_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela</origin>
         <comments>servico_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>intervensao</name>
-        <length>500</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>intervensao</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1110,29 +704,6 @@ where r.beneficiario_id in
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>status_ref</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>status_ref</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>description</name>
@@ -1140,52 +711,6 @@ where r.beneficiario_id in
         <precision>-1</precision>
         <origin>Leitura da tabela</origin>
         <comments>description</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>cancel_reason</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>cancel_reason</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>other_reason</name>
-        <length>250</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>other_reason</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1342,11 +867,11 @@ where r.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>estado</name>
+        <name>age_band</name>
         <length>15</length>
         <precision>0</precision>
         <origin>Leitura da tabela</origin>
-        <comments>estado</comments>
+        <comments>age_band</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1365,57 +890,11 @@ where r.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>notify_to</name>
+        <name>nivel_intervencao_id</name>
         <length>9</length>
         <precision>0</precision>
         <origin>Leitura da tabela</origin>
-        <comments>notify_to</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>entry_point</name>
-        <length>15</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>entry_point</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>us_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela</origin>
-        <comments>us_id</comments>
+        <comments>nivel_intervencao_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1441,52 +920,13 @@ where r.beneficiario_id in
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>240</yloc>
+      <xloc>288</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Leitura do distrito</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>district_code</name>
-        <variable>${district_code}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>128</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Remoção de espaços</name>
+    <name>Remover espaços em branco</name>
     <type>StringOperations</type>
     <description/>
     <distribute>Y</distribute>
@@ -1497,45 +937,6 @@ where r.beneficiario_id in
       <schema_name/>
     </partitioning>
     <fields>
-      <field>
-        <in_stream_name>nota_referencia</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>intervensao</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>name</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
       <field>
         <in_stream_name>description</in_stream_name>
         <out_stream_name/>
@@ -1549,45 +950,6 @@ where r.beneficiario_id in
         <digits>none</digits>
         <remove_special_characters>none</remove_special_characters>
       </field>
-      <field>
-        <in_stream_name>num_livro</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>other_reason</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>ref_livro</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1598,13 +960,13 @@ where r.beneficiario_id in
       </output>
     </remotesteps>
     <GUI>
-      <xloc>688</xloc>
-      <yloc>240</yloc>
+      <xloc>528</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Selecção de dados a migrar</name>
+    <name>Seleccionar dados a migrar</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1616,72 +978,67 @@ where r.beneficiario_id in
     </partitioning>
     <fields>
       <field>
-        <name>id</name>
-      </field>
-      <field>
-        <name>beneficiario_id</name>
-      </field>
-      <field>
-        <name>nota_referencia</name>
-      </field>
-      <field>
-        <name>name</name>
-      </field>
-      <field>
-        <name>entry_point</name>
-      </field>
-      <field>
-        <name>referido_por</name>
-      </field>
-      <field>
-        <name>notify_to</name>
-      </field>
-      <field>
-        <name>num_livro</name>
-      </field>
-      <field>
-        <name>ref_livro</name>
-      </field>
-      <field>
         <name>servico_id</name>
+        <rename/>
       </field>
       <field>
-        <name>intervensao</name>
+        <name>status</name>
+        <rename/>
       </field>
       <field>
         <name>description</name>
-      </field>
-      <field>
-        <name>cancel_reason</name>
-      </field>
-      <field>
-        <name>other_reason</name>
+        <rename/>
       </field>
       <field>
         <name>criado_por</name>
+        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
+        <rename/>
       </field>
       <field>
         <name>criado_em</name>
+        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
+        <rename/>
       </field>
       <field>
         <name>user_location</name>
+        <rename/>
       </field>
       <field>
         <name>user_location2</name>
+        <rename/>
       </field>
       <field>
-        <name>estado</name>
+        <name>age_band</name>
+        <rename/>
       </field>
       <field>
-        <name>us_id</name>
+        <name>nivel_intervencao_id</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
+      <meta>
+        <name>servico_id</name>
+        <rename>servico_id</rename>
+        <type>Integer</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1692,14 +1049,14 @@ where r.beneficiario_id in
       </output>
     </remotesteps>
     <GUI>
-      <xloc>880</xloc>
-      <yloc>240</yloc>
+      <xloc>752</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Validação de campos</name>
-    <type>Validator</type>
+    <name>Escrever na tabela</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1708,93 +1065,69 @@ where r.beneficiario_id in
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <validate_all>N</validate_all>
-    <concat_errors>N</concat_errors>
-    <concat_separator>|</concat_separator>
-    <validator_field>
-      <name>id</name>
-      <validation_name>id</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>Y</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>01</error_code>
-      <error_description>Erro no campo id</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>beneficiario_id</name>
-      <validation_name>beneficiario_id</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>Y</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>02</error_code>
-      <error_description>Erro no campo beneficiario_id</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>nota_referencia</name>
-      <validation_name>nota_referencia</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>03</error_code>
-      <error_description>Erro no campo nota_referencia</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
+    <connection>DLT_NEW</connection>
+    <schema>dreams_db</schema>
+    <table>services_agebands</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>service_id</column_name>
+        <stream_name>servico_id</stream_name>
+      </field>
+      <field>
+        <column_name>status</column_name>
+        <stream_name>status</stream_name>
+      </field>
+      <field>
+        <column_name>description</column_name>
+        <stream_name>description</stream_name>
+      </field>
+      <field>
+        <column_name>created_by</column_name>
+        <stream_name>criado_por</stream_name>
+      </field>
+      <field>
+        <column_name>updated_by</column_name>
+        <stream_name>actualizado_por</stream_name>
+      </field>
+      <field>
+        <column_name>date_created</column_name>
+        <stream_name>criado_em</stream_name>
+      </field>
+      <field>
+        <column_name>date_updated</column_name>
+        <stream_name>actualizado_em</stream_name>
+      </field>
+      <field>
+        <column_name>create_ip</column_name>
+        <stream_name>user_location</stream_name>
+      </field>
+      <field>
+        <column_name>update_ip</column_name>
+        <stream_name>user_location2</stream_name>
+      </field>
+      <field>
+        <column_name>level</column_name>
+        <stream_name>nivel_intervencao_id</stream_name>
+      </field>
+      <field>
+        <column_name>age_band</column_name>
+        <stream_name>age_band</stream_name>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1804,8 +1137,8 @@ where r.beneficiario_id in
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>240</yloc>
+      <xloc>960</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

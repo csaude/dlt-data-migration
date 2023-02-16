@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>migrate-interventions</name>
+    <name>migrate-users-and-profiles</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,9 +427,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2023/01/09 15:55:50.588</created_date>
+    <created_date>2023/01/19 09:59:02.448</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2023/01/09 15:55:50.588</modified_date>
+    <modified_date>2023/01/19 09:59:02.448</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -568,116 +568,53 @@ set unique_checks=0</attribute>
   </connection>
   <order>
     <hop>
-      <from>Leitura da tabela (sub-serviço vazio)</from>
+      <from>Leitura das tabelas</from>
       <to>Validação de campos</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atribuir sub_servico_id</from>
-      <to>Append streams</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Leitura da Tabela (sub-serviço não vazio)</from>
-      <to>Validação de campos 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Validação de campos</from>
-      <to>Atribuir sub_servico_id</to>
+      <to>Selecção de campos a migrar</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Validação de campos 2</from>
-      <to>Append streams</to>
+      <from>Selecção de campos a migrar</from>
+      <to>Escrita na tabela profiles</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Append streams</from>
-      <to>Selecção de dados a migrar</to>
+      <from>Escrita na tabela profiles</from>
+      <to>Escrita na tabela users</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Selecção de dados a migrar</from>
-      <to>Remoção de espaços</to>
+      <from>Escrita na tabela users</from>
+      <to>Escrita na tabela users_provinces</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Remoção de espaços</from>
-      <to>Escrita na Tabela</to>
+      <from>Escrita na tabela users_provinces</from>
+      <to>Escrita na tabela users_districts</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Escrita na tabela users_districts</from>
+      <to>Escrita na tabela users_localities</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Escrita na tabela users_localities</from>
+      <to>Escrita na tabela users_us</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Leitura do distrito</from>
-      <to>Leitura da tabela (sub-serviço vazio)</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Leitura do distrito</from>
-      <to>Leitura da Tabela (sub-serviço não vazio)</to>
+      <to>Leitura das tabelas</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Append streams</name>
-    <type>Append</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <head_name>Atribuir sub_servico_id</head_name>
-    <tail_name>Validação de campos 2</tail_name>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Atribuir sub_servico_id</name>
-    <type>SetValueField</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>sub_servico_id</name>
-        <replaceby>sub_service_id</replaceby>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>768</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Escrita na Tabela</name>
+    <name>Escrita na tabela profiles</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -689,7 +626,7 @@ set unique_checks=0</attribute>
     </partitioning>
     <connection>DLT_NEW</connection>
     <schema>dreams_db</schema>
-    <table>beneficiaries_interventions</table>
+    <table>profiles</table>
     <commit>1000</commit>
     <truncate>Y</truncate>
     <ignore_errors>Y</ignore_errors>
@@ -706,68 +643,16 @@ set unique_checks=0</attribute>
     <return_field/>
     <fields>
       <field>
-        <column_name>sub_service_id</column_name>
-        <stream_name>sub_servico_id</stream_name>
+        <column_name>id</column_name>
+        <stream_name>role</stream_name>
       </field>
       <field>
-        <column_name>result</column_name>
-        <stream_name>resultado</stream_name>
+        <column_name>name</column_name>
+        <stream_name>perfil</stream_name>
       </field>
       <field>
-        <column_name>beneficiary_id</column_name>
-        <stream_name>beneficiario_id</stream_name>
-      </field>
-      <field>
-        <column_name>entry_point</column_name>
-        <stream_name>ponto_entrada</stream_name>
-      </field>
-      <field>
-        <column_name>us_id</column_name>
-        <stream_name>us_id</stream_name>
-      </field>
-      <field>
-        <column_name>activist_id</column_name>
-        <stream_name>activista_id</stream_name>
-      </field>
-      <field>
-        <column_name>provider</column_name>
-        <stream_name>provedor</stream_name>
-      </field>
-      <field>
-        <column_name>status</column_name>
-        <stream_name>status</stream_name>
-      </field>
-      <field>
-        <column_name>remarks</column_name>
-        <stream_name>description</stream_name>
-      </field>
-      <field>
-        <column_name>created_by</column_name>
-        <stream_name>criado_por</stream_name>
-      </field>
-      <field>
-        <column_name>updated_by</column_name>
-        <stream_name>actualizado_por</stream_name>
-      </field>
-      <field>
-        <column_name>date_created</column_name>
-        <stream_name>criado_em</stream_name>
-      </field>
-      <field>
-        <column_name>date_updated</column_name>
-        <stream_name>actualizado_em</stream_name>
-      </field>
-      <field>
-        <column_name>create_ip</column_name>
-        <stream_name>user_location</stream_name>
-      </field>
-      <field>
-        <column_name>update_ip</column_name>
-        <stream_name>user_location2</stream_name>
-      </field>
-      <field>
-        <column_name>date</column_name>
-        <stream_name>date</stream_name>
+        <column_name>description</column_name>
+        <stream_name>descricao_perfil</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -779,13 +664,333 @@ set unique_checks=0</attribute>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1184</xloc>
-      <yloc>128</yloc>
+      <xloc>832</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Leitura da Tabela (sub-serviço não vazio)</name>
+    <name>Escrita na tabela users</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DLT_NEW</connection>
+    <schema>dreams_db</schema>
+    <table>users</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>id</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>name</column_name>
+        <stream_name>nome</stream_name>
+      </field>
+      <field>
+        <column_name>username</column_name>
+        <stream_name>username</stream_name>
+      </field>
+      <field>
+        <column_name>email</column_name>
+        <stream_name>email</stream_name>
+      </field>
+      <field>
+        <column_name>partner_id</column_name>
+        <stream_name>parceiro_id</stream_name>
+      </field>
+      <field>
+        <column_name>entry_point</column_name>
+        <stream_name>entry_point</stream_name>
+      </field>
+      <field>
+        <column_name>phone_number2</column_name>
+        <stream_name>phone_number2</stream_name>
+      </field>
+      <field>
+        <column_name>phone_number</column_name>
+        <stream_name>phone_number</stream_name>
+      </field>
+      <field>
+        <column_name>update_ip</column_name>
+        <stream_name>user_location2</stream_name>
+      </field>
+      <field>
+        <column_name>password</column_name>
+        <stream_name>password_hash</stream_name>
+      </field>
+      <field>
+        <column_name>profile_id</column_name>
+        <stream_name>role</stream_name>
+      </field>
+      <field>
+        <column_name>status</column_name>
+        <stream_name>estado</stream_name>
+      </field>
+      <field>
+        <column_name>date_created</column_name>
+        <stream_name>data_registo</stream_name>
+      </field>
+      <field>
+        <column_name>date_updated</column_name>
+        <stream_name>data_actualizacao</stream_name>
+      </field>
+      <field>
+        <column_name>last_login_at</column_name>
+        <stream_name>data_ultimo_login</stream_name>
+      </field>
+      <field>
+        <column_name>create_ip</column_name>
+        <stream_name>registration_ip</stream_name>
+      </field>
+      <field>
+        <column_name>surname</column_name>
+        <stream_name>apelido</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Escrita na tabela users_districts</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DLT_NEW</connection>
+    <schema>dreams_db</schema>
+    <table>users_districts</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>user_id</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>district_id</column_name>
+        <stream_name>district_code</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>384</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Escrita na tabela users_localities</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DLT_NEW</connection>
+    <schema>dreams_db</schema>
+    <table>users_localities</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>user_id</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>locality_id</column_name>
+        <stream_name>localidade_id</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Escrita na tabela users_provinces</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DLT_NEW</connection>
+    <schema>dreams_db</schema>
+    <table>users_provinces</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>user_id</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>province_id</column_name>
+        <stream_name>provin_code</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>384</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Escrita na tabela users_us</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DLT_NEW</connection>
+    <schema>dreams_db</schema>
+    <table>users_us</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>user_id</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>us_id</column_name>
+        <stream_name>us_id</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Leitura das tabelas</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -796,56 +1001,61 @@ set unique_checks=0</attribute>
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>SELECT bs.*, 
-if (bs.criado_em >= '2021-08-23', STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y'), -- Data de entrada deste campo num único formato (versão 3.2 de 23/08)
- if(bs.actualizado_em >= '2021-08-23' and STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y') &lt;= bs.criado_em, coalesce(STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y'),STR_TO_DATE(bs.data_beneficio,'%m/%d/%Y')),
- if(bs.actualizado_em >= '2021-08-23' and STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y') &lt;= bs.actualizado_em, coalesce(STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y'),STR_TO_DATE(bs.data_beneficio,'%m/%d/%Y')),
- coalesce(STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%m/%d/%Y'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%m/%d/%Y'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%m/%d/%Y'),STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%d/%m/%Y'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%d/%m/%Y'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%d/%m/%Y'),STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%Y/%m/%d'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%Y/%m/%d'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%Y/%m/%d'),STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%Y/%d/%m'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%Y/%d/%m'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%Y/%d/%m'),STR_TO_DATE(bs.data_beneficio,'%m-%d-%Y'),STR_TO_DATE(bs.data_beneficio,'%d %M %Y'),bs.data_beneficio)))) date,
-bs.sub_servico_id sub_service_id
-FROM app_dream_beneficiario_servicos bs
-where bs.sub_servico_id is not null
-and bs.beneficiario_id in
+    <sql>select u.*, 
+substring(p.name, 1, length(reverse(rtrim(p.name))) - locate(' ',reverse(rtrim(p.name)))) nome,
+SUBSTRING_INDEX(trim(p.name), ' ', -1) apelido,
+FROM_UNIXTIME(created_at) data_registo,
+FROM_UNIXTIME(updated_at) data_actualizacao,
+FROM_UNIXTIME(last_login_at) data_ultimo_login,
+case (u.role)
+	when 9 then "DIGITADOR"
+	when 10 then "OUTROS"
+	when 13 then "M&amp;E"
+	when 14 then "DOADOR"
+	when 15 then "GESTOR"
+	when 18 then "SUPERVISOR"
+	when 20 then "ADMIN"
+end perfil,
+case (u.role)
+	when 9 then "Digitador"
+	when 10 then "Outros"
+	when 13 then "Monitoria e Avaliação"
+	when 14 then "Doador"
+	when 15 then "Gestor de Caso"
+	when 18 then "Supervisor"
+	when 20 then "Administrador"
+end descricao_perfil,
+if(blocked_at is null,1,0) estado
+from user u
+left join profile p on p.user_id = u.id
+where u.role in (14,20)
+or u.parceiro_id in
 (
- 	select id from hs_hr_employee
-	where district_code = ${district_code}
+	SELECT id FROM app_dream_parceiros
+	where distrito_id in
+	(
+		select district_code
+		from hs_hr_district
+		where province_code in 
+		(
+			select province_code
+			from hs_hr_district
+			where district_code = 7
+		)
+	)
 )</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
     <variables_active>Y</variables_active>
-    <lazy_conversion_active>Y</lazy_conversion_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta>
       <value-meta>
         <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>district_code</name>
-            <length>16</length>
-            <precision>-1</precision>
-            <origin>Leitura do distrito</origin>
-            <comments/>
-            <conversion_Mask/>
-            <decimal_symbol/>
-            <grouping_symbol/>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
+        <storagetype>normal</storagetype>
         <name>district_code</name>
-        <length>16</length>
+        <length>0</length>
         <precision>-1</precision>
         <origin>Leitura do distrito</origin>
         <comments/>
@@ -870,7 +1080,7 @@ and bs.beneficiario_id in
         <name>id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
+        <origin>Leitura das tabelas</origin>
         <comments>id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -888,60 +1098,14 @@ and bs.beneficiario_id in
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Integer</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>tipo_servico_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>tipo_servico_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>servico_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>servico_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>sub_servico_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>sub_servico_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
+        <name>username</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>username</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -958,37 +1122,35 @@ and bs.beneficiario_id in
       </value-meta>
       <value-meta>
         <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>resultado</name>
-            <length>200</length>
-            <precision>-1</precision>
-            <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-            <comments>resultado</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>resultado</name>
+        <storagetype>normal</storagetype>
+        <name>email</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>email</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>name</name>
         <length>200</length>
         <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>resultado</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1007,11 +1169,11 @@ and bs.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>beneficiario_id</name>
+        <name>provin_code</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>beneficiario_id</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>provin_code</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1030,11 +1192,34 @@ and bs.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>ponto_entrada</name>
+        <name>city_code</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>ponto_entrada</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>city_code</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>localidade_id</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>localidade_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1056,7 +1241,7 @@ and bs.beneficiario_id in
         <name>us_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
+        <origin>Leitura das tabelas</origin>
         <comments>us_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1076,201 +1261,11 @@ and bs.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>activista_id</name>
+        <name>parceiro_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>activista_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>data_beneficio</name>
-            <length>25</length>
-            <precision>-1</precision>
-            <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-            <comments>data_beneficio</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>data_beneficio</name>
-        <length>25</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>data_beneficio</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>provedor</name>
-            <length>300</length>
-            <precision>-1</precision>
-            <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-            <comments>provedor</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>provedor</name>
-        <length>300</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>provedor</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>status</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>status</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>description</name>
-            <length>250</length>
-            <precision>-1</precision>
-            <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-            <comments>description</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>description</name>
-        <length>250</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>description</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>criado_por</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>criado_por</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>parceiro_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1289,11 +1284,11 @@ and bs.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>actualizado_por</name>
+        <name>entry_point</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>actualizado_por</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>entry_point</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1310,36 +1305,13 @@ and bs.beneficiario_id in
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Timestamp</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
-        <name>criado_em</name>
-        <length>0</length>
+        <name>phone_number2</name>
+        <length>50</length>
         <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>criado_em</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Timestamp</type>
-        <storagetype>normal</storagetype>
-        <name>actualizado_em</name>
-        <length>0</length>
-        <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>actualizado_em</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>phone_number2</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1357,37 +1329,12 @@ and bs.beneficiario_id in
       </value-meta>
       <value-meta>
         <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>user_location</name>
-            <length>100</length>
-            <precision>-1</precision>
-            <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-            <comments>user_location</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>user_location</name>
-        <length>100</length>
+        <storagetype>normal</storagetype>
+        <name>phone_number</name>
+        <length>50</length>
         <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>user_location</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>phone_number</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1405,36 +1352,11 @@ and bs.beneficiario_id in
       </value-meta>
       <value-meta>
         <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>user_location2</name>
-            <length>100</length>
-            <precision>-1</precision>
-            <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-            <comments>user_location2</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
+        <storagetype>normal</storagetype>
         <name>user_location2</name>
         <length>100</length>
         <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
+        <origin>Leitura das tabelas</origin>
         <comments>user_location2</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1453,37 +1375,58 @@ and bs.beneficiario_id in
       </value-meta>
       <value-meta>
         <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>date</name>
-            <length>25</length>
-            <precision>-1</precision>
-            <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-            <comments>date</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>date</name>
-        <length>25</length>
+        <storagetype>normal</storagetype>
+        <name>password_hash</name>
+        <length>255</length>
         <precision>-1</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>date</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>password_hash</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>auth_key</name>
+        <length>32</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>auth_key</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>password_reset_token</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>password_reset_token</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1502,11 +1445,609 @@ and bs.beneficiario_id in
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>sub_service_id</name>
+        <name>role</name>
+        <length>4</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>role</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>status</name>
+        <length>4</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>status</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>district_code_1</name>
+        <length>11</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>district_code</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>ccord_id</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Leitura da Tabela (sub-serviço não vazio)</origin>
-        <comments>sub_service_id</comments>
+        <origin>Leitura das tabelas</origin>
+        <comments>ccord_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>created_at</name>
+        <length>50</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>created_at</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>updated_at</name>
+        <length>50</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>updated_at</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>flags</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>flags</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>last_login_at</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>last_login_at</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>confirmed_at</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>confirmed_at</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>blocked_at</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>blocked_at</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>confirmation_token</name>
+        <length>50</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>confirmation_token</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>confirmation_sent_at</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>confirmation_sent_at</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>unconfirmed_email</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>unconfirmed_email</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>recovery_token</name>
+        <length>32</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>recovery_token</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>recovery_sent_at</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>recovery_sent_at</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>registered_from</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>registered_from</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>logged_in_from</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>logged_in_from</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>logged_in_at</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>logged_in_at</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>registration_ip</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>registration_ip</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>nome</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>nome</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>apelido</name>
+        <length>255</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>apelido</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>data_registo</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>data_registo</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>data_actualizacao</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>data_actualizacao</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>data_ultimo_login</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>data_ultimo_login</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>perfil</name>
+        <length>10</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>perfil</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>descricao_perfil</name>
+        <length>21</length>
+        <precision>-1</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>descricao_perfil</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>estado</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>Leitura das tabelas</origin>
+        <comments>estado</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1532,764 +2073,8 @@ and bs.beneficiario_id in
       </output>
     </remotesteps>
     <GUI>
-      <xloc>368</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Leitura da tabela (sub-serviço vazio)</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>DLT_CURRENT</connection>
-    <sql>SELECT bs.*, 
-if (bs.criado_em >= '2021-08-23', STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y'), -- Data de entrada deste campo num único formato (versão 3.2 de 23/08)
- if(bs.actualizado_em >= '2021-08-23' and STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y') &lt;= bs.criado_em, coalesce(STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y'),STR_TO_DATE(bs.data_beneficio,'%m/%d/%Y')),
- if(bs.actualizado_em >= '2021-08-23' and STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y') &lt;= bs.actualizado_em, coalesce(STR_TO_DATE(bs.data_beneficio,'%d/%m/%Y'),STR_TO_DATE(bs.data_beneficio,'%m/%d/%Y')),
- coalesce(STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%m/%d/%Y'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%m/%d/%Y'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%m/%d/%Y'),STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%d/%m/%Y'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%d/%m/%Y'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%d/%m/%Y'),STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%Y/%m/%d'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%Y/%m/%d'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%Y/%m/%d'),STR_TO_DATE(replace(bs.data_beneficio,'.','/'),'%Y/%d/%m'),STR_TO_DATE(replace(bs.data_beneficio,',','/'),'%Y/%d/%m'),STR_TO_DATE(replace(bs.data_beneficio,' ','/'),'%Y/%d/%m'),STR_TO_DATE(bs.data_beneficio,'%m-%d-%Y'),STR_TO_DATE(bs.data_beneficio,'%d %M %Y'),bs.data_beneficio)))) date,
-min(ss.id) sub_service_id
-FROM app_dream_beneficiario_servicos bs
--- left join app_dream_servicos s on bs.servico_id = s.id
-left join app_dream_servicos_sub ss on ss.servico_id = bs.servico_id
-where bs.sub_servico_id is null
-and bs.beneficiario_id in
-(
-	select id from hs_hr_employee
-	where district_code = ${district_code}
-)
-group by bs.id</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>Y</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>district_code</name>
-            <length>16</length>
-            <precision>-1</precision>
-            <origin>Leitura do distrito</origin>
-            <comments/>
-            <conversion_Mask/>
-            <decimal_symbol/>
-            <grouping_symbol/>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>district_code</name>
-        <length>16</length>
-        <precision>-1</precision>
-        <origin>Leitura do distrito</origin>
-        <comments/>
-        <conversion_Mask/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>tipo_servico_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>tipo_servico_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>servico_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>servico_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>sub_servico_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>sub_servico_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>resultado</name>
-            <length>200</length>
-            <precision>-1</precision>
-            <origin>Leitura da tabela (sub-serviço vazio)</origin>
-            <comments>resultado</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>resultado</name>
-        <length>200</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>resultado</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>beneficiario_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>beneficiario_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>ponto_entrada</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>ponto_entrada</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>us_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>us_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>activista_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>activista_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>data_beneficio</name>
-            <length>25</length>
-            <precision>-1</precision>
-            <origin>Leitura da tabela (sub-serviço vazio)</origin>
-            <comments>data_beneficio</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>data_beneficio</name>
-        <length>25</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>data_beneficio</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>provedor</name>
-            <length>300</length>
-            <precision>-1</precision>
-            <origin>Leitura da tabela (sub-serviço vazio)</origin>
-            <comments>provedor</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>provedor</name>
-        <length>300</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>provedor</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>status</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>status</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>description</name>
-            <length>250</length>
-            <precision>-1</precision>
-            <origin>Leitura da tabela (sub-serviço vazio)</origin>
-            <comments>description</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>description</name>
-        <length>250</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>description</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>criado_por</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>criado_por</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>actualizado_por</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>actualizado_por</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Timestamp</type>
-        <storagetype>normal</storagetype>
-        <name>criado_em</name>
-        <length>0</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>criado_em</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Timestamp</type>
-        <storagetype>normal</storagetype>
-        <name>actualizado_em</name>
-        <length>0</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>actualizado_em</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>user_location</name>
-            <length>100</length>
-            <precision>-1</precision>
-            <origin>Leitura da tabela (sub-serviço vazio)</origin>
-            <comments>user_location</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>user_location</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>user_location</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>user_location2</name>
-            <length>100</length>
-            <precision>-1</precision>
-            <origin>Leitura da tabela (sub-serviço vazio)</origin>
-            <comments>user_location2</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>user_location2</name>
-        <length>100</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>user_location2</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>binary-string</storagetype>
-        <storage-meta>
-          <value-meta>
-            <type>String</type>
-            <storagetype>normal</storagetype>
-            <name>date</name>
-            <length>25</length>
-            <precision>-1</precision>
-            <origin>Leitura da tabela (sub-serviço vazio)</origin>
-            <comments>date</comments>
-            <conversion_Mask/>
-            <decimal_symbol>.</decimal_symbol>
-            <grouping_symbol>,</grouping_symbol>
-            <currency_symbol/>
-            <trim_type>none</trim_type>
-            <case_insensitive>N</case_insensitive>
-            <collator_disabled>Y</collator_disabled>
-            <collator_strength>0</collator_strength>
-            <sort_descending>N</sort_descending>
-            <output_padding>N</output_padding>
-            <date_format_lenient>N</date_format_lenient>
-            <date_format_locale>en_US</date_format_locale>
-            <date_format_timezone>Africa/Maputo</date_format_timezone>
-            <lenient_string_to_number>N</lenient_string_to_number>
-          </value-meta>
-        </storage-meta>
-        <name>date</name>
-        <length>25</length>
-        <precision>-1</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>date</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>sub_service_id</name>
-        <length>9</length>
-        <precision>0</precision>
-        <origin>Leitura da tabela (sub-serviço vazio)</origin>
-        <comments>sub_service_id</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>en_US</date_format_locale>
-        <date_format_timezone>Africa/Maputo</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>368</xloc>
-      <yloc>128</yloc>
+      <xloc>384</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2327,79 +2112,13 @@ group by bs.id</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>208</yloc>
+      <xloc>176</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Remoção de espaços</name>
-    <type>StringOperations</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>description</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>resultado</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>provedor</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>none</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>N</init_cap>
-        <mask_xml>None</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>976</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Selecção de dados a migrar</name>
+    <name>Selecção de campos a migrar</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -2411,52 +2130,73 @@ group by bs.id</sql>
     </partitioning>
     <fields>
       <field>
-        <name>sub_servico_id</name>
+        <name>id</name>
       </field>
       <field>
-        <name>resultado</name>
+        <name>username</name>
       </field>
       <field>
-        <name>beneficiario_id</name>
+        <name>email</name>
       </field>
       <field>
-        <name>ponto_entrada</name>
+        <name>provin_code</name>
+      </field>
+      <field>
+        <name>localidade_id</name>
       </field>
       <field>
         <name>us_id</name>
       </field>
       <field>
-        <name>activista_id</name>
+        <name>parceiro_id</name>
       </field>
       <field>
-        <name>provedor</name>
+        <name>entry_point</name>
       </field>
       <field>
-        <name>status</name>
+        <name>phone_number2</name>
       </field>
       <field>
-        <name>description</name>
-      </field>
-      <field>
-        <name>criado_por</name>
-      </field>
-      <field>
-        <name>actualizado_por</name>
-      </field>
-      <field>
-        <name>criado_em</name>
-      </field>
-      <field>
-        <name>actualizado_em</name>
-      </field>
-      <field>
-        <name>user_location</name>
+        <name>phone_number</name>
       </field>
       <field>
         <name>user_location2</name>
       </field>
       <field>
-        <name>date</name>
+        <name>password_hash</name>
+      </field>
+      <field>
+        <name>role</name>
+      </field>
+      <field>
+        <name>estado</name>
+      </field>
+      <field>
+        <name>district_code</name>
+      </field>
+      <field>
+        <name>data_ultimo_login</name>
+      </field>
+      <field>
+        <name>registration_ip</name>
+      </field>
+      <field>
+        <name>nome</name>
+      </field>
+      <field>
+        <name>apelido</name>
+      </field>
+      <field>
+        <name>perfil</name>
+      </field>
+      <field>
+        <name>descricao_perfil</name>
+      </field>
+      <field>
+        <name>data_registo</name>
+      </field>
+      <field>
+        <name>data_actualizacao</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -2469,8 +2209,8 @@ group by bs.id</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>976</xloc>
-      <yloc>272</yloc>
+      <xloc>832</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2493,7 +2233,7 @@ group by bs.id</sql>
       <validation_name>id</validation_name>
       <max_length/>
       <min_length/>
-      <null_allowed>Y</null_allowed>
+      <null_allowed>N</null_allowed>
       <only_null_allowed>N</only_null_allowed>
       <only_numeric_allowed>Y</only_numeric_allowed>
       <data_type>Integer</data_type>
@@ -2517,14 +2257,14 @@ group by bs.id</sql>
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>sub_servico_id</name>
-      <validation_name>sub_servico_id</validation_name>
+      <name>username</name>
+      <validation_name>username</validation_name>
       <max_length/>
       <min_length/>
-      <null_allowed>Y</null_allowed>
+      <null_allowed>N</null_allowed>
       <only_null_allowed>N</only_null_allowed>
       <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>Integer</data_type>
+      <data_type>String</data_type>
       <data_type_verified>Y</data_type_verified>
       <conversion_mask/>
       <decimal_symbol/>
@@ -2538,15 +2278,15 @@ group by bs.id</sql>
       <regular_expression/>
       <regular_expression_not_allowed/>
       <error_code>02</error_code>
-      <error_description>Erro no capo sub_servico_id</error_description>
+      <error_description>Erro no campo username</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>beneficiario_id</name>
-      <validation_name>beneficiario_id</validation_name>
+      <name>role</name>
+      <validation_name>role</validation_name>
       <max_length/>
       <min_length/>
       <null_allowed>N</null_allowed>
@@ -2566,7 +2306,7 @@ group by bs.id</sql>
       <regular_expression/>
       <regular_expression_not_allowed/>
       <error_code>03</error_code>
-      <error_description>Erro no campo beneficiario_id</error_description>
+      <error_description>Erro no campo role</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
@@ -2581,120 +2321,8 @@ group by bs.id</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Validação de campos 2</name>
-    <type>Validator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <validate_all>N</validate_all>
-    <concat_errors>N</concat_errors>
-    <concat_separator>|</concat_separator>
-    <validator_field>
-      <name>id</name>
-      <validation_name>id</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>Y</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>Y</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>01</error_code>
-      <error_description>Erro no campo id</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>sub_servico_id</name>
-      <validation_name>sub_servico_id</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>Y</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>02</error_code>
-      <error_description>Erro no capo sub_servico_id</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <validator_field>
-      <name>beneficiario_id</name>
-      <validation_name>beneficiario_id</validation_name>
-      <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
-      <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>Y</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <max_value/>
-      <min_value/>
-      <start_string/>
-      <end_string/>
-      <start_string_not_allowed/>
-      <end_string_not_allowed/>
-      <regular_expression/>
-      <regular_expression_not_allowed/>
-      <error_code>03</error_code>
-      <error_description>Erro no campo beneficiario_id</error_description>
-      <is_sourcing_values>N</is_sourcing_values>
-      <sourcing_step/>
-      <sourcing_field/>
-      <allowed_value/>
-    </validator_field>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>592</xloc>
-      <yloc>272</yloc>
+      <xloc>608</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
