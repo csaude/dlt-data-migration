@@ -627,7 +627,7 @@ set unique_checks=0</attribute>
       </field>
       <field>
         <column_name>status</column_name>
-        <stream_name>status</stream_name>
+        <stream_name>estado</stream_name>
       </field>
       <field>
         <column_name>description</column_name>
@@ -684,15 +684,11 @@ set unique_checks=0</attribute>
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>
-SELECT *
-FROM dreamsco_app.app_dream_referencias_s
-where referencia_id in
-(
-	select r.id from app_dream_referencias r
-	inner join hs_hr_employee e on r.beneficiario_id = e.id
-	where e.district_code = ${district_code}
-)</sql>
+    <sql>SELECT rs.*, if(r.status_ref = 0, 0, 2) estado
+FROM dreamsco_app.app_dream_referencias_s rs
+inner join dreamsco_app.app_dream_referencias r on (rs.referencia_id = r.id)
+inner join hs_hr_employee e on r.beneficiario_id = e.id
+where e.district_code = ${district_code}</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -704,7 +700,7 @@ where referencia_id in
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>district_code</name>
-        <length>16</length>
+        <length>0</length>
         <precision>-1</precision>
         <origin>Leitura do distrito</origin>
         <comments/>
@@ -999,6 +995,29 @@ where referencia_id in
         <date_format_timezone>Africa/Maputo</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>estado</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>Leitura da tabela</origin>
+        <comments>estado</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
     </row-meta>
     <attributes/>
     <cluster_schema/>
@@ -1107,33 +1126,43 @@ where referencia_id in
     <fields>
       <field>
         <name>referencia_id</name>
+        <rename/>
       </field>
       <field>
         <name>servico_id</name>
+        <rename/>
       </field>
       <field>
-        <name>status</name>
+        <name>estado</name>
+        <rename/>
       </field>
       <field>
         <name>description</name>
+        <rename/>
       </field>
       <field>
         <name>criado_por</name>
+        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
+        <rename/>
       </field>
       <field>
         <name>criado_em</name>
+        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
+        <rename/>
       </field>
       <field>
         <name>user_location</name>
+        <rename/>
       </field>
       <field>
         <name>user_location2</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

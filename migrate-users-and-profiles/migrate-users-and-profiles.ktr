@@ -664,7 +664,7 @@ set unique_checks=0</attribute>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
+      <xloc>912</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
@@ -776,7 +776,7 @@ set unique_checks=0</attribute>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
+      <xloc>656</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
@@ -880,7 +880,7 @@ set unique_checks=0</attribute>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
+      <xloc>656</xloc>
       <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
@@ -984,7 +984,7 @@ set unique_checks=0</attribute>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
+      <xloc>912</xloc>
       <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1040,7 +1040,7 @@ or u.parceiro_id in
 		(
 			select province_code
 			from hs_hr_district
-			where district_code = 7
+			where district_code = ${district_code}
 		)
 	)
 )</sql>
@@ -2209,7 +2209,7 @@ or u.parceiro_id in
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
+      <xloc>912</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2321,7 +2321,7 @@ or u.parceiro_id in
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
+      <xloc>640</xloc>
       <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
