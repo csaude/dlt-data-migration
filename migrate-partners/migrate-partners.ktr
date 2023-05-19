@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>migrate-provinces</name>
+    <name>migrate-partners</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -568,18 +569,18 @@ set unique_checks=0</attribute>
   </connection>
   <order>
     <hop>
+      <from>Leitura da Tabela</from>
+      <to>Validação de campos</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Validação de campos</from>
       <to>Remoção de espaços</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Remoção de espaços</from>
-      <to>Escrita da Tabela</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Leitura da Tabela</from>
-      <to>Validação de campos</to>
+      <to>Escrita na Tabela</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -589,7 +590,7 @@ set unique_checks=0</attribute>
     </hop>
   </order>
   <step>
-    <name>Escrita da Tabela</name>
+    <name>Escrita na Tabela</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -601,11 +602,11 @@ set unique_checks=0</attribute>
     </partitioning>
     <connection>DLT_NEW</connection>
     <schema>dreams_db</schema>
-    <table>province</table>
+    <table>partners</table>
     <commit>1000</commit>
     <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
+    <ignore_errors>Y</ignore_errors>
+    <use_batch>N</use_batch>
     <specify_fields>Y</specify_fields>
     <partitioning_enabled>N</partitioning_enabled>
     <partitioning_field/>
@@ -622,32 +623,56 @@ set unique_checks=0</attribute>
         <stream_name>id</stream_name>
       </field>
       <field>
-        <column_name>code</column_name>
-        <stream_name>province_code</stream_name>
+        <column_name>name</column_name>
+        <stream_name>name</stream_name>
       </field>
       <field>
-        <column_name>name</column_name>
-        <stream_name>province_name</stream_name>
+        <column_name>partner_type</column_name>
+        <stream_name>parceria_id</stream_name>
+      </field>
+      <field>
+        <column_name>district_id</column_name>
+        <stream_name>distrito_id</stream_name>
+      </field>
+      <field>
+        <column_name>abbreviation</column_name>
+        <stream_name>abreviatura</stream_name>
       </field>
       <field>
         <column_name>status</column_name>
         <stream_name>status</stream_name>
       </field>
       <field>
-        <column_name>created_by</column_name>
-        <stream_name>created_by</stream_name>
+        <column_name>description</column_name>
+        <stream_name>description</stream_name>
       </field>
       <field>
-        <column_name>create_date</column_name>
-        <stream_name>date_created</stream_name>
+        <column_name>logo</column_name>
+        <stream_name>logo</stream_name>
+      </field>
+      <field>
+        <column_name>created_by</column_name>
+        <stream_name>criado_por</stream_name>
       </field>
       <field>
         <column_name>updated_by</column_name>
-        <stream_name>updated_by</stream_name>
+        <stream_name>actualizado_por</stream_name>
       </field>
       <field>
-        <column_name>update_date</column_name>
-        <stream_name>date_updated</stream_name>
+        <column_name>date_created</column_name>
+        <stream_name>criado_em</stream_name>
+      </field>
+      <field>
+        <column_name>date_updated</column_name>
+        <stream_name>actualizado_em</stream_name>
+      </field>
+      <field>
+        <column_name>create_ip</column_name>
+        <stream_name>user_location</stream_name>
+      </field>
+      <field>
+        <column_name>update_ip</column_name>
+        <stream_name>user_location2</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -659,8 +684,8 @@ set unique_checks=0</attribute>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1040</xloc>
-      <yloc>192</yloc>
+      <xloc>1024</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -676,17 +701,22 @@ set unique_checks=0</attribute>
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>SELECT id, province_name, province_code, status, 1 created_by, '2019-09-03 00:00:00' date_created, null updated_by, null date_updated
-FROM hs_hr_province
--- where id in (
---	select province_code
+    <sql>SELECT * FROM app_dream_parceiros
+-- where distrito_id in
+-- (
+--	select district_code
 --	from hs_hr_district
---	where district_code = ${district_code}
+--	where province_code in 
+--	(
+--		select province_code
+--		from hs_hr_district
+--		where district_code = ${district_code}
+--	)
 -- )</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
+    <variables_active>N</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cached_row_meta_active>N</cached_row_meta_active>
     <row-meta>
@@ -739,12 +769,58 @@ FROM hs_hr_province
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>province_name</name>
-        <length>40</length>
+        <name>name</name>
+        <length>250</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>province_name</comments>
+        <comments>name</comments>
         <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>parceria_id</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>parceria_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>distrito_id</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>distrito_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -762,11 +838,11 @@ FROM hs_hr_province
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>province_code</name>
-        <length>2</length>
+        <name>abreviatura</name>
+        <length>100</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>province_code</comments>
+        <comments>abreviatura</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -806,13 +882,59 @@ FROM hs_hr_province
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>description</name>
+        <length>250</length>
+        <precision>-1</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>description</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>logo</name>
+        <length>150</length>
+        <precision>-1</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>logo</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>created_by</name>
-        <length>15</length>
+        <name>criado_por</name>
+        <length>9</length>
         <precision>0</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>created_by</comments>
+        <comments>criado_por</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -829,13 +951,59 @@ FROM hs_hr_province
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>String</type>
+        <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>date_created</name>
-        <length>19</length>
+        <name>actualizado_por</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>actualizado_por</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>criado_em</name>
+        <length>0</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>date_created</comments>
+        <comments>criado_em</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>actualizado_em</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>actualizado_em</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -854,11 +1022,11 @@ FROM hs_hr_province
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>updated_by</name>
-        <length>-1</length>
+        <name>user_location</name>
+        <length>100</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>updated_by</comments>
+        <comments>user_location</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -877,11 +1045,11 @@ FROM hs_hr_province
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>date_updated</name>
-        <length>-1</length>
+        <name>user_location2</name>
+        <length>100</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>date_updated</comments>
+        <comments>user_location2</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -907,8 +1075,8 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>192</yloc>
+      <xloc>432</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -946,8 +1114,8 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
-      <yloc>192</yloc>
+      <xloc>224</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -964,7 +1132,7 @@ FROM hs_hr_province
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>province_name</in_stream_name>
+        <in_stream_name>name</in_stream_name>
         <out_stream_name/>
         <trim_type>both</trim_type>
         <lower_upper>none</lower_upper>
@@ -977,7 +1145,20 @@ FROM hs_hr_province
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>province_code</in_stream_name>
+        <in_stream_name>description</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>N</init_cap>
+        <mask_xml>None</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>abreviatura</in_stream_name>
         <out_stream_name/>
         <trim_type>both</trim_type>
         <lower_upper>none</lower_upper>
@@ -999,8 +1180,8 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
-      <yloc>192</yloc>
+      <xloc>816</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1047,14 +1228,14 @@ FROM hs_hr_province
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>province_name</name>
-      <validation_name>province_name</validation_name>
+      <name>parceria_id</name>
+      <validation_name>parceria_id</validation_name>
       <max_length/>
       <min_length/>
       <null_allowed>N</null_allowed>
       <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
+      <only_numeric_allowed>Y</only_numeric_allowed>
+      <data_type>Integer</data_type>
       <data_type_verified>Y</data_type_verified>
       <conversion_mask/>
       <decimal_symbol/>
@@ -1068,15 +1249,15 @@ FROM hs_hr_province
       <regular_expression/>
       <regular_expression_not_allowed/>
       <error_code>02</error_code>
-      <error_description>Erro no campo province_name</error_description>
+      <error_description>Erro no campo parceria_id</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>province_code</name>
-      <validation_name>province_code</validation_name>
+      <name>name</name>
+      <validation_name>name</validation_name>
       <max_length/>
       <min_length/>
       <null_allowed>N</null_allowed>
@@ -1096,7 +1277,91 @@ FROM hs_hr_province
       <regular_expression/>
       <regular_expression_not_allowed/>
       <error_code>03</error_code>
-      <error_description>Erro no campo province_code</error_description>
+      <error_description>Erro no campo name</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>description</name>
+      <validation_name>description</validation_name>
+      <max_length/>
+      <min_length/>
+      <null_allowed>Y</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>04</error_code>
+      <error_description>Erro no campo description</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>distrito_id</name>
+      <validation_name>distrito_id</validation_name>
+      <max_length/>
+      <min_length/>
+      <null_allowed>N</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>Y</only_numeric_allowed>
+      <data_type>Integer</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>05</error_code>
+      <error_description>Erro no campo distriito_id</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>abreviatura</name>
+      <validation_name>abreviatura</validation_name>
+      <max_length/>
+      <min_length/>
+      <null_allowed>Y</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>String</data_type>
+      <data_type_verified>Y</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>06</error_code>
+      <error_description>Erro no campo abreviatura</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
@@ -1111,8 +1376,8 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
-      <yloc>192</yloc>
+      <xloc>624</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>migrate-provinces</name>
+    <name>migrate-districts</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,9 +427,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2022/11/16 10:59:05.130</created_date>
+    <created_date>2022/11/24 15:55:46.091</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2022/11/16 10:59:05.130</modified_date>
+    <modified_date>2022/11/24 15:55:46.091</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -568,18 +568,18 @@ set unique_checks=0</attribute>
   </connection>
   <order>
     <hop>
-      <from>Validação de campos</from>
-      <to>Remoção de espaços</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Remoção de espaços</from>
-      <to>Escrita da Tabela</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Leitura da Tabela</from>
-      <to>Validação de campos</to>
+      <to>Validação de Campos</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Validação de Campos</from>
+      <to>Remoção de Espaços</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Remoção de Espaços</from>
+      <to>Escrita da Tabela</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -601,7 +601,7 @@ set unique_checks=0</attribute>
     </partitioning>
     <connection>DLT_NEW</connection>
     <schema>dreams_db</schema>
-    <table>province</table>
+    <table>district</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -619,15 +619,19 @@ set unique_checks=0</attribute>
     <fields>
       <field>
         <column_name>id</column_name>
-        <stream_name>id</stream_name>
+        <stream_name>district_code</stream_name>
       </field>
       <field>
         <column_name>code</column_name>
-        <stream_name>province_code</stream_name>
+        <stream_name>cod_distrito</stream_name>
       </field>
       <field>
         <column_name>name</column_name>
-        <stream_name>province_name</stream_name>
+        <stream_name>district_name</stream_name>
+      </field>
+      <field>
+        <column_name>province_id</column_name>
+        <stream_name>province_code</stream_name>
       </field>
       <field>
         <column_name>status</column_name>
@@ -638,7 +642,7 @@ set unique_checks=0</attribute>
         <stream_name>created_by</stream_name>
       </field>
       <field>
-        <column_name>create_date</column_name>
+        <column_name>date_created</column_name>
         <stream_name>date_created</stream_name>
       </field>
       <field>
@@ -646,7 +650,7 @@ set unique_checks=0</attribute>
         <stream_name>updated_by</stream_name>
       </field>
       <field>
-        <column_name>update_date</column_name>
+        <column_name>date_updated</column_name>
         <stream_name>date_updated</stream_name>
       </field>
     </fields>
@@ -659,8 +663,8 @@ set unique_checks=0</attribute>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1040</xloc>
-      <yloc>192</yloc>
+      <xloc>1056</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -676,13 +680,9 @@ set unique_checks=0</attribute>
       <schema_name/>
     </partitioning>
     <connection>DLT_CURRENT</connection>
-    <sql>SELECT id, province_name, province_code, status, 1 created_by, '2019-09-03 00:00:00' date_created, null updated_by, null date_updated
-FROM hs_hr_province
--- where id in (
---	select province_code
---	from hs_hr_district
---	where district_code = ${district_code}
--- )</sql>
+    <sql>SELECT *, 1 status, 1 created_by, '2019-09-03 00:00:00' date_created, null updated_by, null date_updated 
+FROM hs_hr_district 
+-- WHERE province_code = (select province_code from hs_hr_district where district_code = ${district_code})</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -716,11 +716,11 @@ FROM hs_hr_province
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>id</name>
+        <name>district_code_1</name>
         <length>9</length>
         <precision>0</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>id</comments>
+        <comments>district_code</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -739,11 +739,34 @@ FROM hs_hr_province
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>province_name</name>
-        <length>40</length>
+        <name>cod_distrito</name>
+        <length>10</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
-        <comments>province_name</comments>
+        <comments>cod_distrito</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>district_name</name>
+        <length>50</length>
+        <precision>-1</precision>
+        <origin>Leitura da Tabela</origin>
+        <comments>district_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -763,7 +786,7 @@ FROM hs_hr_province
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>province_code</name>
-        <length>2</length>
+        <length>13</length>
         <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
         <comments>province_code</comments>
@@ -786,7 +809,7 @@ FROM hs_hr_province
         <type>Integer</type>
         <storagetype>normal</storagetype>
         <name>status</name>
-        <length>9</length>
+        <length>15</length>
         <precision>0</precision>
         <origin>Leitura da Tabela</origin>
         <comments>status</comments>
@@ -856,7 +879,7 @@ FROM hs_hr_province
         <storagetype>normal</storagetype>
         <name>updated_by</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>Leitura da Tabela</origin>
         <comments>updated_by</comments>
         <conversion_Mask/>
@@ -879,7 +902,7 @@ FROM hs_hr_province
         <storagetype>normal</storagetype>
         <name>date_updated</name>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
         <origin>Leitura da Tabela</origin>
         <comments>date_updated</comments>
         <conversion_Mask/>
@@ -907,8 +930,8 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>192</yloc>
+      <xloc>384</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -946,13 +969,13 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
-      <yloc>192</yloc>
+      <xloc>192</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Remoção de espaços</name>
+    <name>Remoção de Espaços</name>
     <type>StringOperations</type>
     <description/>
     <distribute>Y</distribute>
@@ -964,7 +987,7 @@ FROM hs_hr_province
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>province_name</in_stream_name>
+        <in_stream_name>cod_distrito</in_stream_name>
         <out_stream_name/>
         <trim_type>both</trim_type>
         <lower_upper>none</lower_upper>
@@ -977,7 +1000,7 @@ FROM hs_hr_province
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>province_code</in_stream_name>
+        <in_stream_name>district_name</in_stream_name>
         <out_stream_name/>
         <trim_type>both</trim_type>
         <lower_upper>none</lower_upper>
@@ -999,13 +1022,13 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
-      <yloc>192</yloc>
+      <xloc>816</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Validação de campos</name>
+    <name>Validação de Campos</name>
     <type>Validator</type>
     <description/>
     <distribute>Y</distribute>
@@ -1019,15 +1042,15 @@ FROM hs_hr_province
     <concat_errors>N</concat_errors>
     <concat_separator>|</concat_separator>
     <validator_field>
-      <name>id</name>
-      <validation_name>id</validation_name>
+      <name>district_code</name>
+      <validation_name>district_code</validation_name>
       <max_length/>
       <min_length/>
-      <null_allowed>N</null_allowed>
+      <null_allowed>Y</null_allowed>
       <only_null_allowed>N</only_null_allowed>
-      <only_numeric_allowed>Y</only_numeric_allowed>
-      <data_type>Integer</data_type>
-      <data_type_verified>Y</data_type_verified>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>None</data_type>
+      <data_type_verified>N</data_type_verified>
       <conversion_mask/>
       <decimal_symbol/>
       <grouping_symbol/>
@@ -1039,23 +1062,23 @@ FROM hs_hr_province
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>01</error_code>
-      <error_description>Erro no campo id</error_description>
+      <error_code>001</error_code>
+      <error_description>Erro no campo district_code</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
       <allowed_value/>
     </validator_field>
     <validator_field>
-      <name>province_name</name>
-      <validation_name>province_name</validation_name>
+      <name>cod_distrito</name>
+      <validation_name>cod_distrito</validation_name>
       <max_length/>
       <min_length/>
-      <null_allowed>N</null_allowed>
+      <null_allowed>Y</null_allowed>
       <only_null_allowed>N</only_null_allowed>
       <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
-      <data_type_verified>Y</data_type_verified>
+      <data_type>None</data_type>
+      <data_type_verified>N</data_type_verified>
       <conversion_mask/>
       <decimal_symbol/>
       <grouping_symbol/>
@@ -1067,8 +1090,36 @@ FROM hs_hr_province
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>02</error_code>
-      <error_description>Erro no campo province_name</error_description>
+      <error_code>002</error_code>
+      <error_description>Erro no campo cod_distrito</error_description>
+      <is_sourcing_values>N</is_sourcing_values>
+      <sourcing_step/>
+      <sourcing_field/>
+      <allowed_value/>
+    </validator_field>
+    <validator_field>
+      <name>district_name</name>
+      <validation_name>district_name</validation_name>
+      <max_length/>
+      <min_length/>
+      <null_allowed>Y</null_allowed>
+      <only_null_allowed>N</only_null_allowed>
+      <only_numeric_allowed>N</only_numeric_allowed>
+      <data_type>None</data_type>
+      <data_type_verified>N</data_type_verified>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <max_value/>
+      <min_value/>
+      <start_string/>
+      <end_string/>
+      <start_string_not_allowed/>
+      <end_string_not_allowed/>
+      <regular_expression/>
+      <regular_expression_not_allowed/>
+      <error_code>003</error_code>
+      <error_description>Erro no campo district_name</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
       <sourcing_field/>
@@ -1079,11 +1130,11 @@ FROM hs_hr_province
       <validation_name>province_code</validation_name>
       <max_length/>
       <min_length/>
-      <null_allowed>N</null_allowed>
+      <null_allowed>Y</null_allowed>
       <only_null_allowed>N</only_null_allowed>
       <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
-      <data_type_verified>Y</data_type_verified>
+      <data_type>None</data_type>
+      <data_type_verified>N</data_type_verified>
       <conversion_mask/>
       <decimal_symbol/>
       <grouping_symbol/>
@@ -1095,7 +1146,7 @@ FROM hs_hr_province
       <end_string_not_allowed/>
       <regular_expression/>
       <regular_expression_not_allowed/>
-      <error_code>03</error_code>
+      <error_code>004</error_code>
       <error_description>Erro no campo province_code</error_description>
       <is_sourcing_values>N</is_sourcing_values>
       <sourcing_step/>
@@ -1111,8 +1162,8 @@ FROM hs_hr_province
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
-      <yloc>192</yloc>
+      <xloc>592</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
