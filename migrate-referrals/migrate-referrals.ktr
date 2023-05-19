@@ -609,7 +609,7 @@ set unique_checks=0</attribute>
     <schema>dreams_db</schema>
     <table>references</table>
     <commit>1000</commit>
-    <truncate>Y</truncate>
+    <truncate>N</truncate>
     <ignore_errors>Y</ignore_errors>
     <use_batch>N</use_batch>
     <specify_fields>Y</specify_fields>
@@ -711,6 +711,10 @@ set unique_checks=0</attribute>
         <column_name>us_id</column_name>
         <stream_name>us_id</stream_name>
       </field>
+      <field>
+        <column_name>date</column_name>
+        <stream_name>data</stream_name>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -747,7 +751,8 @@ case (r.refer_to)
 	when 'ES' then 3
 	else null
 end entry_point,
-us.id us_id
+us.id us_id,
+r.criado_em data
 FROM dreamsco_app.app_dream_referencias r
 left join profile p on r.notificar_ao = p.id
 left join user u on p.user_id = u.id 
@@ -772,7 +777,7 @@ and r.id in
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>district_code</name>
-        <length>1</length>
+        <length>16</length>
         <precision>-1</precision>
         <origin>Leitura do distrito</origin>
         <comments/>
@@ -1435,6 +1440,29 @@ and r.id in
         <date_format_timezone>Africa/Maputo</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>data</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Leitura da tabela</origin>
+        <comments>data</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>Africa/Maputo</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
     </row-meta>
     <attributes/>
     <cluster_schema/>
@@ -1621,69 +1649,95 @@ and r.id in
     <fields>
       <field>
         <name>id</name>
+        <rename/>
       </field>
       <field>
         <name>beneficiario_id</name>
+        <rename/>
       </field>
       <field>
         <name>nota_referencia</name>
+        <rename/>
       </field>
       <field>
         <name>name</name>
+        <rename/>
       </field>
       <field>
         <name>entry_point</name>
+        <rename/>
       </field>
       <field>
         <name>referido_por</name>
+        <rename/>
       </field>
       <field>
         <name>notify_to</name>
+        <rename/>
       </field>
       <field>
         <name>num_livro</name>
+        <rename/>
       </field>
       <field>
         <name>ref_livro</name>
+        <rename/>
       </field>
       <field>
         <name>servico_id</name>
+        <rename/>
       </field>
       <field>
         <name>intervensao</name>
+        <rename/>
       </field>
       <field>
         <name>description</name>
+        <rename/>
       </field>
       <field>
         <name>cancel_reason</name>
+        <rename/>
       </field>
       <field>
         <name>other_reason</name>
+        <rename/>
       </field>
       <field>
         <name>criado_por</name>
+        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
+        <rename/>
       </field>
       <field>
         <name>criado_em</name>
+        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
+        <rename/>
       </field>
       <field>
         <name>user_location</name>
+        <rename/>
       </field>
       <field>
         <name>user_location2</name>
+        <rename/>
       </field>
       <field>
         <name>estado</name>
+        <rename/>
       </field>
       <field>
         <name>us_id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>data</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

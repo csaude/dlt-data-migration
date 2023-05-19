@@ -503,7 +503,7 @@
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>dreams_db</database>
+    <database>dreams_db_ile_boane</database>
     <port>3306</port>
     <username>root</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10ccc2ffce</password>
@@ -1483,7 +1483,7 @@ set unique_checks=0</attribute>
     <schema>dreams_db</schema>
     <table>beneficiaries</table>
     <commit>1000</commit>
-    <truncate>Y</truncate>
+    <truncate>N</truncate>
     <ignore_errors>Y</ignore_errors>
     <use_batch>N</use_batch>
     <specify_fields>Y</specify_fields>
@@ -1738,415 +1738,312 @@ set unique_checks=0</attribute>
     <fields>
       <field>
         <name>id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_number</name>
-        <rename/>
       </field>
       <field>
         <name>member_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_lastname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_firstname</name>
-        <rename/>
       </field>
       <field>
         <name>emp_middle_name</name>
-        <rename/>
       </field>
       <field>
         <name>emp_nick_name</name>
-        <rename/>
       </field>
       <field>
         <name>ponto_entrada</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_id</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro_benificiario_id</name>
-        <rename/>
       </field>
       <field>
         <name>via</name>
-        <rename/>
       </field>
       <field>
         <name>idade_anos</name>
-        <rename/>
       </field>
       <field>
         <name>estudante</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_classe</name>
-        <rename/>
       </field>
       <field>
         <name>estudante_escola</name>
-        <rename/>
       </field>
       <field>
         <name>gravida</name>
-        <rename/>
       </field>
       <field>
         <name>filhos</name>
-        <rename/>
       </field>
       <field>
         <name>bairro_id</name>
-        <rename/>
       </field>
       <field>
         <name>encarregado_educacao</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia</name>
-        <rename/>
       </field>
       <field>
         <name>deficiencia_tipo</name>
-        <rename/>
       </field>
       <field>
         <name>house_sustainer</name>
-        <rename/>
       </field>
       <field>
         <name>married_before</name>
-        <rename/>
       </field>
       <field>
         <name>pregant_or_breastfeed</name>
-        <rename/>
       </field>
       <field>
         <name>employed</name>
-        <rename/>
       </field>
       <field>
         <name>tested_hiv</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_exploracao_sexual</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vsex_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_migrante_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima_trafico</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sexual_activa</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_relacao_multipla</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_vitima</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tipo_violencia</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_tempo</name>
-        <rename/>
       </field>
       <field>
         <name>coun_code</name>
-        <rename/>
       </field>
       <field>
         <name>provin_code</name>
-        <rename/>
       </field>
       <field>
         <name>district_code</name>
-        <rename/>
       </field>
       <field>
         <name>city_code</name>
-        <rename/>
       </field>
       <field>
         <name>membro_localidade_id</name>
-        <rename/>
       </field>
       <field>
         <name>us_id</name>
-        <rename/>
       </field>
       <field>
         <name>membro_zona</name>
-        <rename/>
       </field>
       <field>
         <name>membro_circulo</name>
-        <rename/>
       </field>
       <field>
         <name>membro_celula</name>
-        <rename/>
       </field>
       <field>
         <name>membro_data_admissao</name>
-        <rename/>
       </field>
       <field>
         <name>membro_caratao_eleitor</name>
-        <rename/>
       </field>
       <field>
         <name>membro_cargo_partido_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_smoker</name>
-        <rename/>
       </field>
       <field>
         <name>ethnic_race_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_birthday</name>
-        <rename/>
       </field>
       <field>
         <name>nation_code</name>
-        <rename/>
       </field>
       <field>
         <name>emp_gender</name>
-        <rename/>
       </field>
       <field>
         <name>emp_marital_status</name>
-        <rename/>
       </field>
       <field>
         <name>emp_ssn_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_sin_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_other_id</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_num</name>
-        <rename/>
       </field>
       <field>
         <name>emp_dri_lice_exp_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_military_service</name>
-        <rename/>
       </field>
       <field>
         <name>emp_status</name>
-        <rename/>
       </field>
       <field>
         <name>job_title_code</name>
-        <rename/>
       </field>
       <field>
         <name>eeo_cat_code</name>
-        <rename/>
       </field>
       <field>
         <name>work_station</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street1</name>
-        <rename/>
       </field>
       <field>
         <name>emp_street2</name>
-        <rename/>
       </field>
       <field>
         <name>emp_zipcode</name>
-        <rename/>
       </field>
       <field>
         <name>emp_hm_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_mobile</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_telephone</name>
-        <rename/>
       </field>
       <field>
         <name>emp_work_email</name>
-        <rename/>
       </field>
       <field>
         <name>sal_grd_code</name>
-        <rename/>
       </field>
       <field>
         <name>joined_date</name>
-        <rename/>
       </field>
       <field>
         <name>emp_oth_email</name>
-        <rename/>
       </field>
       <field>
         <name>termination_id</name>
-        <rename/>
       </field>
       <field>
         <name>vbg_sex_worker</name>
-        <rename/>
       </field>
       <field>
         <name>bi</name>
-        <rename/>
       </field>
       <field>
         <name>nuit</name>
-        <rename/>
       </field>
       <field>
         <name>passaporte</name>
-        <rename/>
       </field>
       <field>
         <name>dire</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>bi_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom3</name>
-        <rename/>
       </field>
       <field>
         <name>other_prof_info</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_i</name>
-        <rename/>
       </field>
       <field>
         <name>nuit_data_f</name>
-        <rename/>
       </field>
       <field>
         <name>custom7</name>
-        <rename/>
       </field>
       <field>
         <name>custom8</name>
-        <rename/>
       </field>
       <field>
         <name>custom9</name>
-        <rename/>
       </field>
       <field>
         <name>custom10</name>
-        <rename/>
       </field>
       <field>
         <name>criado_por</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
-        <rename/>
       </field>
       <field>
         <name>criado_em</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
-        <rename/>
       </field>
       <field>
         <name>user_location</name>
-        <rename/>
       </field>
       <field>
         <name>user_location2</name>
-        <rename/>
       </field>
       <field>
         <name>flag_vulneravel</name>
-        <rename/>
       </field>
       <field>
         <name>alcohol_drugs_use</name>
-        <rename/>
       </field>
       <field>
         <name>sti_history</name>
-        <rename/>
       </field>
       <field>
         <name>orphan</name>
-        <rename/>
       </field>
       <field>
         <name>date</name>
-        <rename/>
       </field>
       <field>
         <name>parceiro</name>
-        <rename/>
       </field>
       <field>
         <name>neighborhood</name>
-        <rename/>
       </field>
       <field>
         <name>organization</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

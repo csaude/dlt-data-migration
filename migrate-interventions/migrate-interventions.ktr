@@ -691,7 +691,7 @@ set unique_checks=0</attribute>
     <schema>dreams_db</schema>
     <table>beneficiaries_interventions</table>
     <commit>1000</commit>
-    <truncate>Y</truncate>
+    <truncate>N</truncate>
     <ignore_errors>Y</ignore_errors>
     <use_batch>N</use_batch>
     <specify_fields>Y</specify_fields>

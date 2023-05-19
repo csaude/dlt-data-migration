@@ -884,7 +884,7 @@
       <fields>
         <field>
           <variable_name>district_code</variable_name>
-          <variable_value>7</variable_value>
+          <variable_value>30</variable_value>
           <variable_type>CURRENT_JOB</variable_type>
         </field>
       </fields>

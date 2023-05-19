@@ -603,7 +603,7 @@ set unique_checks=0</attribute>
     <schema>dreams_db</schema>
     <table>province</table>
     <commit>1000</commit>
-    <truncate>Y</truncate>
+    <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
     <specify_fields>Y</specify_fields>
@@ -856,7 +856,7 @@ FROM hs_hr_province
         <storagetype>normal</storagetype>
         <name>updated_by</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
         <comments>updated_by</comments>
         <conversion_Mask/>
@@ -879,7 +879,7 @@ FROM hs_hr_province
         <storagetype>normal</storagetype>
         <name>date_updated</name>
         <length>-1</length>
-        <precision>0</precision>
+        <precision>-1</precision>
         <origin>Leitura da Tabela</origin>
         <comments>date_updated</comments>
         <conversion_Mask/>

@@ -649,7 +649,7 @@
       <fields>
         <field>
           <variable_name>district_code</variable_name>
-          <variable_value>16</variable_value>
+          <variable_value>18</variable_value>
           <variable_type>CURRENT_JOB</variable_type>
         </field>
       </fields>
