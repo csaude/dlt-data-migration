@@ -700,7 +700,7 @@ where e.district_code = ${district_code}</sql>
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>district_code</name>
-        <length>0</length>
+        <length>2</length>
         <precision>-1</precision>
         <origin>Leitura do distrito</origin>
         <comments/>

@@ -756,7 +756,7 @@ r.criado_em data
 FROM dreamsco_app.app_dream_referencias r
 left join profile p on r.notificar_ao = p.id
 left join user u on p.user_id = u.id 
-inner join app_dream_us us on u.us_id = us.id 
+left join app_dream_us us on u.us_id = us.id 
 where r.beneficiario_id in
 (
 	select id from hs_hr_employee
@@ -777,7 +777,7 @@ and r.id in
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>district_code</name>
-        <length>16</length>
+        <length>2</length>
         <precision>-1</precision>
         <origin>Leitura do distrito</origin>
         <comments/>
@@ -1649,95 +1649,72 @@ and r.id in
     <fields>
       <field>
         <name>id</name>
-        <rename/>
       </field>
       <field>
         <name>beneficiario_id</name>
-        <rename/>
       </field>
       <field>
         <name>nota_referencia</name>
-        <rename/>
       </field>
       <field>
         <name>name</name>
-        <rename/>
       </field>
       <field>
         <name>entry_point</name>
-        <rename/>
       </field>
       <field>
         <name>referido_por</name>
-        <rename/>
       </field>
       <field>
         <name>notify_to</name>
-        <rename/>
       </field>
       <field>
         <name>num_livro</name>
-        <rename/>
       </field>
       <field>
         <name>ref_livro</name>
-        <rename/>
       </field>
       <field>
         <name>servico_id</name>
-        <rename/>
       </field>
       <field>
         <name>intervensao</name>
-        <rename/>
       </field>
       <field>
         <name>description</name>
-        <rename/>
       </field>
       <field>
         <name>cancel_reason</name>
-        <rename/>
       </field>
       <field>
         <name>other_reason</name>
-        <rename/>
       </field>
       <field>
         <name>criado_por</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_por</name>
-        <rename/>
       </field>
       <field>
         <name>criado_em</name>
-        <rename/>
       </field>
       <field>
         <name>actualizado_em</name>
-        <rename/>
       </field>
       <field>
         <name>user_location</name>
-        <rename/>
       </field>
       <field>
         <name>user_location2</name>
-        <rename/>
       </field>
       <field>
         <name>estado</name>
-        <rename/>
       </field>
       <field>
         <name>us_id</name>
-        <rename/>
       </field>
       <field>
         <name>data</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
